@@ -31,4 +31,21 @@ public class Operaciones {
       }
      
     }
+    
+    public void AgregarEquipo(Jugadores jugador, Equipos equipo){
+        try {
+        SessionFactory sesion = NewHibernateUtil.getSessionFactory();
+        Session session;
+        session=sesion.openSession();
+        session.beginTransaction();
+        session.save(jugador);
+        session.save(equipo);
+        session.getTransaction().commit();
+        session.close();
+        JOptionPane.showMessageDialog(null,"Equipo creado correctamente");
+        } catch (Exception e) {
+              //JOptionPane.showMessageDialog(null,"El Juagador ya existe");
+	      //System. out. println("Usuario ya existe");          
+        }
+    }
 }
