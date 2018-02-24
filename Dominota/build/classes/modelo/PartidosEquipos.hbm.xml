@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Feb 24, 2018 10:50:51 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="modelo.PartidosEquipos" table="PARTIDOS_EQUIPOS" schema="USUARIODOMINOTA" optimistic-lock="version">
+        <id name="id" type="big_decimal">
+            <column name="ID" precision="22" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="partidas" class="modelo.Partidas" fetch="select">
+            <column name="PARTIDAS_ID" precision="22" scale="0" not-null="true" />
+        </many-to-one>
+        <many-to-one name="equipos" class="modelo.Equipos" fetch="select">
+            <column name="EQUIPOS_ID" precision="22" scale="0" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>
