@@ -6,6 +6,7 @@
 package vista;
 
 import controlador.Operaciones;
+import java.awt.BorderLayout;
 import modelo.Jugadores;
 
 /**
@@ -29,103 +30,196 @@ public class NuevoJuagador extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        name = new java.awt.TextField();
-        button1 = new java.awt.Button();
         jLabel1 = new javax.swing.JLabel();
+        panel1 = new java.awt.Panel();
+        label1 = new java.awt.Label();
+        Equipos = new java.awt.Button();
+        Individual = new java.awt.Button();
+        Estadisticas = new java.awt.Button();
+        button2 = new java.awt.Button();
+        Equipos1 = new java.awt.Button();
+        PanelGeneral = new java.awt.Panel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel2.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
-        jLabel2.setText("Agregar Jugador");
-
-        name.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-        name.setText("Nombre del Jugador ");
-        name.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameActionPerformed(evt);
-            }
-        });
-
-        button1.setBackground(new java.awt.Color(51, 0, 255));
-        button1.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-        button1.setForeground(new java.awt.Color(255, 255, 255));
-        button1.setLabel("Agragar Juagador");
-        button1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(138, 138, 138)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(name, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(button1, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))))
-                .addContainerGap(151, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addGap(20, 20, 20)
-                .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
-                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
-        );
+        setBackground(new java.awt.Color(51, 0, 51));
 
         jLabel1.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
         jLabel1.setText("Dominota");
+
+        label1.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
+        label1.setText("Menu");
+
+        Equipos.setBackground(new java.awt.Color(204, 204, 255));
+        Equipos.setLabel("2 Equipos");
+        Equipos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EquiposActionPerformed(evt);
+            }
+        });
+
+        Individual.setBackground(new java.awt.Color(204, 204, 255));
+        Individual.setLabel("Individual");
+        Individual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IndividualActionPerformed(evt);
+            }
+        });
+
+        Estadisticas.setBackground(new java.awt.Color(204, 204, 255));
+        Estadisticas.setLabel("Estadísticas");
+        Estadisticas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EstadisticasActionPerformed(evt);
+            }
+        });
+
+        button2.setActionCommand("Agregar Juagador");
+        button2.setBackground(new java.awt.Color(204, 204, 255));
+        button2.setLabel("Agregar Juagador");
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
+
+        Equipos1.setActionCommand("Agregar Equipo");
+        Equipos1.setBackground(new java.awt.Color(204, 204, 255));
+        Equipos1.setLabel("Agregar Equipo");
+        Equipos1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Equipos1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
+        panel1.setLayout(panel1Layout);
+        panel1Layout.setHorizontalGroup(
+            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
+                .addContainerGap(32, Short.MAX_VALUE)
+                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
+            .addGroup(panel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(Estadisticas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Individual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Equipos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Equipos1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        panel1Layout.setVerticalGroup(
+            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(Equipos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Individual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Estadisticas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Equipos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 79, Short.MAX_VALUE))
+        );
+
+        Equipos1.getAccessibleContext().setAccessibleName("Agregar Equipo");
+
+        PanelGeneral.setMaximumSize(new java.awt.Dimension(3276798, 3276798));
+
+        javax.swing.GroupLayout PanelGeneralLayout = new javax.swing.GroupLayout(PanelGeneral);
+        PanelGeneral.setLayout(PanelGeneralLayout);
+        PanelGeneralLayout.setHorizontalGroup(
+            PanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 361, Short.MAX_VALUE)
+        );
+        PanelGeneralLayout.setVerticalGroup(
+            PanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(178, 178, 178)
+                        .addGap(126, 126, 126)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(PanelGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(PanelGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(panel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameActionPerformed
+    private void EquiposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EquiposActionPerformed
+        Equipos equipo= new Equipos();
+        equipo.setSize(350, 160);
+        equipo.setLocation(5, 5);
+        PanelGeneral.removeAll();
+        PanelGeneral.add(equipo, BorderLayout.CENTER);
+        PanelGeneral.revalidate();
+        PanelGeneral.repaint();
+    }//GEN-LAST:event_EquiposActionPerformed
 
-    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-        Jugadores juegador= new Jugadores(name.getText());
-        oper.AgregarUsuario(juegador);
-    }//GEN-LAST:event_button1ActionPerformed
+    private void EstadisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EstadisticasActionPerformed
+        Estadisticas estadistica= new Estadisticas();
+        estadistica.setSize(350, 160);
+        estadistica.setLocation(5, 5);
+        PanelGeneral.removeAll();
+        PanelGeneral.add(estadistica, BorderLayout.CENTER);
+        PanelGeneral.revalidate();
+        PanelGeneral.repaint();
+    }//GEN-LAST:event_EstadisticasActionPerformed
+
+    private void IndividualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IndividualActionPerformed
+        Individual individual= new Individual();
+        individual.setSize(350, 160);
+        individual.setLocation(5, 5);
+        PanelGeneral.removeAll();
+        PanelGeneral.add(individual, BorderLayout.CENTER);
+        PanelGeneral.revalidate();
+        PanelGeneral.repaint();
+    }//GEN-LAST:event_IndividualActionPerformed
+
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        AgragarJugador jugador= new AgragarJugador();
+        jugador.setSize(350, 160);
+        jugador.setLocation(5, 5);
+        PanelGeneral.removeAll();
+        PanelGeneral.add(jugador, BorderLayout.CENTER);
+        PanelGeneral.revalidate();
+        PanelGeneral.repaint();
+    }//GEN-LAST:event_button2ActionPerformed
+
+    private void Equipos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Equipos1ActionPerformed
+        NuevoEquipo equipo= new NuevoEquipo();
+        equipo.setSize(400, 400);
+        equipo.setLocation(5, 5);
+        PanelGeneral.removeAll();
+        PanelGeneral.add(equipo, BorderLayout.CENTER);
+        PanelGeneral.revalidate();
+        PanelGeneral.repaint();
+    }//GEN-LAST:event_Equipos1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -163,10 +257,14 @@ public class NuevoJuagador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Button button1;
+    private java.awt.Button Equipos;
+    private java.awt.Button Equipos1;
+    private java.awt.Button Estadisticas;
+    private java.awt.Button Individual;
+    private java.awt.Panel PanelGeneral;
+    private java.awt.Button button2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
-    private java.awt.TextField name;
+    private java.awt.Label label1;
+    private java.awt.Panel panel1;
     // End of variables declaration//GEN-END:variables
 }

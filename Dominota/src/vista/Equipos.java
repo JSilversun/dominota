@@ -9,12 +9,12 @@ package vista;
  *
  * @author loreanaisabel
  */
-public class Estadisticas extends javax.swing.JPanel {
+public class Equipos extends javax.swing.JPanel {
 
     /**
-     * Creates new form Estadisticas
+     * Creates new form Equipos
      */
-    public Estadisticas() {
+    public Equipos() {
         initComponents();
     }
 
@@ -32,23 +32,23 @@ public class Estadisticas extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
 
         label1.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
-        label1.setText("Estadisticas");
+        label1.setText("Equipos");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(22, 22, 22)
                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(254, Short.MAX_VALUE))
+                .addContainerGap(271, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(167, Short.MAX_VALUE))
+                .addContainerGap(160, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
