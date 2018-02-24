@@ -5,6 +5,8 @@
  */
 package dominota;
 
+import controlador.Operaciones;
+
 /**
  *
  * @author Yuleidy
@@ -16,6 +18,8 @@ public class Dominota {
      */
     public static void main(String[] args) {
         System. out. println("Hola mundo");
+        Operaciones operacion= new Operaciones();
+        operacion.AgregarUsuario();
     }
     
 }

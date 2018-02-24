@@ -21,8 +21,7 @@ public class Jugadores  implements java.io.Serializable {
     }
 
 	
-    public Jugadores(BigDecimal id, String nombre) {
-        this.id = id;
+    public Jugadores(String nombre) {
         this.nombre = nombre;
     }
     public Jugadores(BigDecimal id, String nombre, Set equiposesForJugadoresId, Set equiposesForJugadoresId1) {

@@ -6,7 +6,7 @@
     <class name="modelo.Jugadores" table="JUGADORES" schema="USUARIODOMINOTA" optimistic-lock="version">
         <id name="id" type="big_decimal">
             <column name="ID" precision="22" scale="0" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <property name="nombre" type="string">
             <column name="NOMBRE" length="30" not-null="true" unique="true" />
