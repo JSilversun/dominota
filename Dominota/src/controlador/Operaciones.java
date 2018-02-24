@@ -6,7 +6,10 @@
 package controlador;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -47,5 +50,24 @@ public class Operaciones {
               //JOptionPane.showMessageDialog(null,"El Juagador ya existe");
 	      //System. out. println("Usuario ya existe");          
         }
+    }
+    
+    public ArrayList<Jugadores> ConsultarJugadores(){
+        ArrayList<Jugadores> jugadores = null;
+        try {
+            SessionFactory sesion = NewHibernateUtil.getSessionFactory();
+            Session session;
+            session=sesion.openSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from Jugadores");
+            jugadores = (ArrayList<Jugadores>)query.list();
+            for(Jugadores jugador : jugadores) {
+                System.out.println(jugador.getNombre());
+            }
+        }
+        catch(Exception e) {
+            
+        }
+        return jugadores;
     }
 }
