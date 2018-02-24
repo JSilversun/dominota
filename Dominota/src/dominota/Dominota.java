@@ -6,6 +6,7 @@
 package dominota;
 
 import controlador.Operaciones;
+import javax.sound.midi.VoiceStatus;
 
 /**
  *
@@ -18,8 +19,9 @@ public class Dominota {
      */
     public static void main(String[] args) {
         System. out. println("Hola mundo");
-        Operaciones operacion= new Operaciones();
-        operacion.AgregarUsuario();
+        //Operaciones operacion= new Operaciones();
+        //operacion.AgregarUsuario();
+        new vista.NuevoJuagador().setVisible(true);
     }
     
 }

@@ -15,16 +15,19 @@ import org.hibernate.Transaction;
 import modelo.*;
 
 public class Operaciones {
-    public void AgregarUsuario(){
-      Jugadores profesor=new Jugadores("Javier");
+    public void AgregarUsuario(Jugadores jugador){
+      try {
       SessionFactory sesion = NewHibernateUtil.getSessionFactory();
       Session session;
       session=sesion.openSession();
       session.beginTransaction();
-      session.save(profesor);
+      session.save(jugador);
       session.getTransaction().commit();
       session.close();
       JOptionPane.showMessageDialog(null,"Crado correctamente");
+      } catch (Exception e) {
+	      e.printStackTrace();          
+      }
      
     }
 }
