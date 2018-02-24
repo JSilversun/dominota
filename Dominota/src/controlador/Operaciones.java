@@ -26,7 +26,8 @@ public class Operaciones {
       session.close();
       JOptionPane.showMessageDialog(null,"Crado correctamente");
       } catch (Exception e) {
-	      e.printStackTrace();          
+              JOptionPane.showMessageDialog(null,"El Juagador ya existe");
+	      System. out. println("Usuario ya existe");          
       }
      
     }
