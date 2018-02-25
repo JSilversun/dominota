@@ -37,20 +37,19 @@ public class Operaciones {
      
     }
     
-    public void AgregarEquipo(Jugadores jugador, Equipos equipo){
+    public void AgregarEquipo(Equipos equipo){
         try {
-        SessionFactory sesion = NewHibernateUtil.getSessionFactory();
-        Session session;
-        session=sesion.openSession();
-        session.beginTransaction();
-        session.save(jugador);
-        session.save(equipo);
-        session.getTransaction().commit();
-        session.close();
-        JOptionPane.showMessageDialog(null,"Equipo creado correctamente");
+            SessionFactory sesion = NewHibernateUtil.getSessionFactory();
+            Session session;
+            session=sesion.openSession();
+            session.beginTransaction();
+            session.save(equipo);
+            session.getTransaction().commit();
+            session.close();
+            JOptionPane.showMessageDialog(null,"Equipo creado correctamente");
         } catch (Exception e) {
-              //JOptionPane.showMessageDialog(null,"El Juagador ya existe");
-	      //System. out. println("Usuario ya existe");          
+              JOptionPane.showMessageDialog(null,"El equipo ya exise");
+	      System. out. println(e);          
         }
     }
     
@@ -73,6 +72,22 @@ public class Operaciones {
         return jugadores;
     }
     
+    public Jugadores InformacionJugador(String nombre){
+        try {
+            SessionFactory sesion = NewHibernateUtil.getSessionFactory();
+            Session session;
+            session=sesion.openSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from Jugadores where nombre =:nombre");
+            query.setParameter("nombre", nombre);
+            Jugadores jugador = (Jugadores) query.uniqueResult();
+            return jugador;
+        }
+        catch(Exception e) {
+            
+        }
+        return null;
+    }
     public ArrayList<Equipos> ConsultarEquiposes(){
         ArrayList<Equipos> equipos = null;
         try {
