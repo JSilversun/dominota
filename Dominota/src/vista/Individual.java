@@ -101,6 +101,7 @@ public class Individual extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setPreferredSize(new java.awt.Dimension(400, 400));
 
         jLabel1.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
         jLabel1.setText("Juego Individual");
@@ -152,7 +153,7 @@ public class Individual extends javax.swing.JPanel {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(82, 82, 82)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(124, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,7 +177,7 @@ public class Individual extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,6 +196,7 @@ public class Individual extends javax.swing.JPanel {
         List<String> file = ListaIndividual.getSelectedValuesList();
         ArrayList<Equipos> equipos = new ArrayList<Equipos>();
         System.out.println(file.get(0));
+        Partidas partida=null;
         if (file.size() < 2 && file.size()>4) {
             JOptionPane.showMessageDialog(null, "El juego debe tener al menos 2 y maximo 4  jugadores");
         } else {
@@ -205,12 +207,20 @@ public class Individual extends javax.swing.JPanel {
                 equipos.add(equipo1);
             }
             
-                oper.crearPartidaIndividuales(equipos,Integer.parseInt(PuntosMaximos.getText()));
+                partida=oper.crearPartidaIndividuales(equipos,Integer.parseInt(PuntosMaximos.getText()));
             }catch(Exception e){
                 JOptionPane.showMessageDialog(null, "El puntaje máximo no es válido");
             }
 
         }
+        Juego juego= new Juego(partida);
+        juego.setSize(800, 800);
+        jPanel1.setSize(800,800);
+        juego.setLocation(1, 1);
+        jPanel1.removeAll();
+        jPanel1.add(juego, BorderLayout.CENTER);
+        jPanel1.revalidate();
+        jPanel1.repaint();
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

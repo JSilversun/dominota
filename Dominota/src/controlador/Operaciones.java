@@ -94,7 +94,7 @@ public class Operaciones {
         }
     }
     
-    public void crearPartidaIndividuales(ArrayList<Equipos> equipos, int puntos){
+    public Partidas crearPartidaIndividuales(ArrayList<Equipos> equipos, int puntos){
         try {
             SessionFactory sesion = NewHibernateUtil.getSessionFactory();
             Session session;
@@ -108,11 +108,13 @@ public class Operaciones {
             }     
             session.getTransaction().commit();
             session.close();
-            JOptionPane.showMessageDialog(null, "Partida creada con exito!");
+            return partida;
+            //JOptionPane.showMessageDialog(null, "Partida creada con exito!");
         }
         catch(Exception e) {
             System.out.println("error");
         }
+        return null;
     }
     
     public Jugadores InformacionJugador(String nombre){
