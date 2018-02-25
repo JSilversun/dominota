@@ -17,8 +17,7 @@ public class PartidosEquipos  implements java.io.Serializable {
     public PartidosEquipos() {
     }
 
-    public PartidosEquipos(BigDecimal id, Partidas partidas, Equipos equipos) {
-       this.id = id;
+    public PartidosEquipos(Partidas partidas, Equipos equipos) {
        this.partidas = partidas;
        this.equipos = equipos;
     }

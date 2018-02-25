@@ -70,4 +70,42 @@ public class Operaciones {
         }
         return jugadores;
     }
+    
+    public ArrayList<Equipos> ConsultarEquiposes(){
+        ArrayList<Equipos> equipos = null;
+        try {
+            SessionFactory sesion = NewHibernateUtil.getSessionFactory();
+            Session session;
+            session=sesion.openSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from Equipos where jugadores_id1 <> null");
+            equipos = (ArrayList<Equipos>)query.list();
+            for(Equipos equipo : equipos) {
+                System.out.println(equipo.getNombre());
+            }
+        }
+        catch(Exception e) {
+            
+        }
+        return equipos;
+    }
+    
+    public ArrayList<Equipos> ConsultarIndividual(){
+        ArrayList<Equipos> equipos = null;
+        try {
+            SessionFactory sesion = NewHibernateUtil.getSessionFactory();
+            Session session;
+            session=sesion.openSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from Equipos where jugadores_id1 = null");
+            equipos = (ArrayList<Equipos>)query.list();
+            for(Equipos equipo : equipos) {
+                System.out.println(equipo.getNombre());
+            }
+        }
+        catch(Exception e) {
+            
+        }
+        return equipos;
+    }
 }

@@ -33,11 +33,10 @@ public class NuevoJuagador extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         panel1 = new java.awt.Panel();
         label1 = new java.awt.Label();
-        Equipos = new java.awt.Button();
-        Individual = new java.awt.Button();
         Estadisticas = new java.awt.Button();
         button2 = new java.awt.Button();
         Equipos1 = new java.awt.Button();
+        PartidaBoton = new java.awt.Button();
         PanelGeneral = new java.awt.Panel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -46,24 +45,10 @@ public class NuevoJuagador extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
         jLabel1.setText("Dominota");
 
+        panel1.setBackground(new java.awt.Color(248, 252, 252));
+
         label1.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
         label1.setText("Menu");
-
-        Equipos.setBackground(new java.awt.Color(204, 204, 255));
-        Equipos.setLabel("2 Equipos");
-        Equipos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EquiposActionPerformed(evt);
-            }
-        });
-
-        Individual.setBackground(new java.awt.Color(204, 204, 255));
-        Individual.setLabel("Individual");
-        Individual.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                IndividualActionPerformed(evt);
-            }
-        });
 
         Estadisticas.setBackground(new java.awt.Color(204, 204, 255));
         Estadisticas.setLabel("Estadísticas");
@@ -91,6 +76,14 @@ public class NuevoJuagador extends javax.swing.JFrame {
             }
         });
 
+        PartidaBoton.setBackground(new java.awt.Color(204, 204, 255));
+        PartidaBoton.setLabel("Nueva Partida");
+        PartidaBoton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PartidaBotonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
         panel1Layout.setHorizontalGroup(
@@ -104,9 +97,8 @@ public class NuevoJuagador extends javax.swing.JFrame {
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(Estadisticas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Individual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Equipos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Equipos1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(Equipos1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(PartidaBoton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         panel1Layout.setVerticalGroup(
@@ -114,20 +106,16 @@ public class NuevoJuagador extends javax.swing.JFrame {
             .addGroup(panel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
-                .addComponent(Equipos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Individual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PartidaBoton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Estadisticas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Equipos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 79, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-
-        Equipos1.getAccessibleContext().setAccessibleName("Agregar Equipo");
 
         PanelGeneral.setMaximumSize(new java.awt.Dimension(3276798, 3276798));
 
@@ -139,7 +127,7 @@ public class NuevoJuagador extends javax.swing.JFrame {
         );
         PanelGeneralLayout.setVerticalGroup(
             PanelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 261, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -155,7 +143,7 @@ public class NuevoJuagador extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(PanelGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,23 +151,13 @@ public class NuevoJuagador extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PanelGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(PanelGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(panel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void EquiposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EquiposActionPerformed
-        Equipos equipo= new Equipos();
-        equipo.setSize(350, 160);
-        equipo.setLocation(5, 5);
-        PanelGeneral.removeAll();
-        PanelGeneral.add(equipo, BorderLayout.CENTER);
-        PanelGeneral.revalidate();
-        PanelGeneral.repaint();
-    }//GEN-LAST:event_EquiposActionPerformed
 
     private void EstadisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EstadisticasActionPerformed
         Estadisticas estadistica= new Estadisticas();
@@ -190,16 +168,6 @@ public class NuevoJuagador extends javax.swing.JFrame {
         PanelGeneral.revalidate();
         PanelGeneral.repaint();
     }//GEN-LAST:event_EstadisticasActionPerformed
-
-    private void IndividualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IndividualActionPerformed
-        Individual individual= new Individual();
-        individual.setSize(350, 160);
-        individual.setLocation(5, 5);
-        PanelGeneral.removeAll();
-        PanelGeneral.add(individual, BorderLayout.CENTER);
-        PanelGeneral.revalidate();
-        PanelGeneral.repaint();
-    }//GEN-LAST:event_IndividualActionPerformed
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
         AgragarJugador jugador= new AgragarJugador();
@@ -220,6 +188,16 @@ public class NuevoJuagador extends javax.swing.JFrame {
         PanelGeneral.revalidate();
         PanelGeneral.repaint();
     }//GEN-LAST:event_Equipos1ActionPerformed
+
+    private void PartidaBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PartidaBotonActionPerformed
+        InicioNuevaPartida partida= new InicioNuevaPartida();
+        partida.setSize(400, 400);
+        partida.setLocation(5, 5);
+        PanelGeneral.removeAll();
+        PanelGeneral.add(partida, BorderLayout.CENTER);
+        PanelGeneral.revalidate();
+        PanelGeneral.repaint();
+    }//GEN-LAST:event_PartidaBotonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -257,11 +235,10 @@ public class NuevoJuagador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Button Equipos;
     private java.awt.Button Equipos1;
     private java.awt.Button Estadisticas;
-    private java.awt.Button Individual;
     private java.awt.Panel PanelGeneral;
+    private java.awt.Button PartidaBoton;
     private java.awt.Button button2;
     private javax.swing.JLabel jLabel1;
     private java.awt.Label label1;

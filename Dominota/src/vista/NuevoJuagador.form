@@ -38,7 +38,7 @@
                       <Component id="PanelGeneral" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="19" max="32767" attributes="0"/>
+              <EmptySpace pref="27" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -48,8 +48,8 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="PanelGeneral" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <Component id="PanelGeneral" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
           <Component id="panel1" alignment="1" max="32767" attributes="0"/>
       </Group>
@@ -65,6 +65,11 @@
       </Properties>
     </Component>
     <Container class="java.awt.Panel" name="panel1">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="fc" green="fc" red="f8" type="rgb"/>
+        </Property>
+      </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -79,9 +84,8 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="button2" pref="0" max="32767" attributes="0"/>
                       <Component id="Estadisticas" max="32767" attributes="0"/>
-                      <Component id="Individual" alignment="0" max="32767" attributes="0"/>
-                      <Component id="Equipos" alignment="0" max="32767" attributes="0"/>
                       <Component id="Equipos1" alignment="1" max="32767" attributes="0"/>
+                      <Component id="PartidaBoton" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -92,17 +96,15 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="label1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-                  <Component id="Equipos" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="Individual" min="-2" max="-2" attributes="0"/>
+                  <Component id="PartidaBoton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="Estadisticas" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="button2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="Equipos1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="79" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -115,28 +117,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Menu"/>
           </Properties>
-        </Component>
-        <Component class="java.awt.Button" name="Equipos">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="cc" red="cc" type="rgb"/>
-            </Property>
-            <Property name="label" type="java.lang.String" value="2 Equipos"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EquiposActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="java.awt.Button" name="Individual">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="cc" red="cc" type="rgb"/>
-            </Property>
-            <Property name="label" type="java.lang.String" value="Individual"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="IndividualActionPerformed"/>
-          </Events>
         </Component>
         <Component class="java.awt.Button" name="Estadisticas">
           <Properties>
@@ -169,11 +149,19 @@
             </Property>
             <Property name="label" type="java.lang.String" value="Agregar Equipo"/>
           </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Agregar Equipo"/>
-          </AccessibilityProperties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Equipos1ActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="java.awt.Button" name="PartidaBoton">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="cc" red="cc" type="rgb"/>
+            </Property>
+            <Property name="label" type="java.lang.String" value="Nueva Partida"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PartidaBotonActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -193,7 +181,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="261" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
