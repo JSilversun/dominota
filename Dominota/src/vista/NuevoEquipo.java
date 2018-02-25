@@ -5,11 +5,17 @@
  */
 package vista;
 
+import java.util.Arrays;
 import java.awt.BorderLayout;
 import controlador.Operaciones;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.DefaultListSelectionModel;
 import javax.swing.JList;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import modelo.Equipos;
 import modelo.Jugadores;
 
 /**
@@ -24,16 +30,19 @@ public class NuevoEquipo extends javax.swing.JPanel {
     Operaciones oper;
     protected ArrayList<Jugadores> jugadores;
     protected DefaultListModel DLM;
-    
+    int indices[];
+
     public NuevoEquipo() {
         initComponents();
         oper = new Operaciones();
         DLM = new DefaultListModel();
         this.jugadores = oper.ConsultarJugadores();
-        for(Jugadores jugador : this.jugadores) {
-            DLM.addElement(jugador.getNombre()); 
+        for (Jugadores jugador : this.jugadores) {
+            DLM.addElement(jugador.getNombre());
         }
         lista_jugadores.setModel(DLM);
+        lista_jugadores.setSelectionModel(new LimitedSelectionModel(lista_jugadores,2));
+        lista_jugadores.addListSelectionListener(new ListListener());
     }
 
     /**
@@ -49,9 +58,9 @@ public class NuevoEquipo extends javax.swing.JPanel {
         label1 = new java.awt.Label();
         jLabel2 = new javax.swing.JLabel();
         equipo = new javax.swing.JTextField();
-        button1 = new java.awt.Button();
         jScrollPane1 = new javax.swing.JScrollPane();
         lista_jugadores = new javax.swing.JList<>();
+        button1 = new java.awt.Button();
         button2 = new java.awt.Button();
 
         setPreferredSize(new java.awt.Dimension(365, 365));
@@ -67,17 +76,6 @@ public class NuevoEquipo extends javax.swing.JPanel {
 
         equipo.setToolTipText("Nombre Equipo");
 
-        button1.setActionCommand("Agregar Juagador");
-        button1.setBackground(new java.awt.Color(153, 204, 255));
-        button1.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-        button1.setForeground(new java.awt.Color(0, 0, 0));
-        button1.setLabel("Guardar equipo");
-        button1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button1ActionPerformed(evt);
-            }
-        });
-
         lista_jugadores.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2" };
             public int getSize() { return strings.length; }
@@ -85,17 +83,6 @@ public class NuevoEquipo extends javax.swing.JPanel {
         });
         lista_jugadores.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         jScrollPane1.setViewportView(lista_jugadores);
-
-        button2.setActionCommand("Agregar Jugador");
-        button2.setBackground(new java.awt.Color(51, 0, 255));
-        button2.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-        button2.setForeground(new java.awt.Color(255, 255, 255));
-        button2.setLabel("Agregar Jugador");
-        button2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button2ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -110,13 +97,8 @@ public class NuevoEquipo extends javax.swing.JPanel {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(equipo, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,38 +110,75 @@ public class NuevoEquipo extends javax.swing.JPanel {
                     .addComponent(jLabel2)
                     .addComponent(equipo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        button1.setActionCommand("Agregar Juagador");
+        button1.setBackground(new java.awt.Color(153, 204, 255));
+        button1.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
+        button1.setForeground(new java.awt.Color(0, 0, 0));
+        button1.setLabel("Guardar equipo");
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
+
+        button2.setActionCommand("Agregar Jugador");
+        button2.setBackground(new java.awt.Color(51, 0, 255));
+        button2.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
+        button2.setForeground(new java.awt.Color(255, 255, 255));
+        button2.setLabel("Agregar Jugador");
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-        
+        ArrayList<Jugadores> jugadores = new ArrayList<Jugadores>();
+        Object[] jugador = lista_jugadores.getSelectedValues();
+        Jugadores jug;
+        for (int i = 0; i < 2; i++) {
+            jug = oper.InformacionJugador(jugador[i].toString());
+            jugadores.add(jug);
+        }
+        Equipos equipos = new Equipos(equipo.getText(), jugadores);
+        oper.AgregarEquipo(equipos);
     }//GEN-LAST:event_button1ActionPerformed
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
-        AgragarJugador jugador= new AgragarJugador();
+        AgragarJugador jugador = new AgragarJugador();
         jugador.setSize(350, 160);
         jugador.setLocation(5, 5);
         jPanel1.removeAll();
@@ -168,6 +187,52 @@ public class NuevoEquipo extends javax.swing.JPanel {
         jPanel1.repaint();
     }//GEN-LAST:event_button2ActionPerformed
 
+    public class ListListener implements ListSelectionListener {
+
+        public void valueChanged(ListSelectionEvent e) {
+            indices = lista_jugadores.getSelectedIndices();
+            if (indices.length > 2) {
+                System.out.println("Solo puede seleccionar 2 jugadores por equipo");
+                System.out.println(lista_jugadores);
+                lista_jugadores.setSelectedIndices(Arrays.copyOfRange(indices, 1, indices.length));
+            }
+        }
+    }
+    
+    private static class LimitedSelectionModel extends DefaultListSelectionModel {
+
+        private JList list;
+        private int maxCount;
+
+        private LimitedSelectionModel(JList list, int maxCount) {
+            this.list = list;
+            this.maxCount = maxCount;
+        }
+
+        @Override
+        public void setSelectionInterval(int index0, int index1) {
+            if (index1 - index0 >= maxCount) {
+                index1 = index0 + maxCount - 1;
+            }
+            super.setSelectionInterval(index0, index1);
+        }
+
+        @Override
+        public void addSelectionInterval(int index0, int index1) {
+            int selectionLength = list.getSelectedIndices().length;
+            if (selectionLength >= maxCount) {
+                return;
+            }
+
+            if (index1 - index0 >= maxCount - selectionLength) {
+                index1 = index0 + maxCount - 1 - selectionLength;
+            }
+            if (index1 < index0) {
+                return;
+            }
+            super.addSelectionInterval(index0, index1);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Button button1;

@@ -69,6 +69,7 @@ ALTER TABLE Rondas ADD CONSTRAINT Rondas_Equipos_FK FOREIGN KEY ( Equipos_Id ) R
 
 ALTER TABLE Rondas ADD CONSTRAINT Rondas_Partidas_FK FOREIGN KEY ( Partidas_ID ) REFERENCES Partidas ( ID ) ;
 
+ALTER TABLE equipos add CONSTRAINT jugador1_jugador2 UNIQUE (jugadores_id, jugadores_id1);
 
 -- Oracle SQL Developer Data Modeler Summary Report: 
 -- 

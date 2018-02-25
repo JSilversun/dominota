@@ -3,6 +3,7 @@ package modelo;
 
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,8 +23,15 @@ public class Equipos  implements java.io.Serializable {
 
     public Equipos() {
     }
-
-	
+    public Equipos(Jugadores jugadoresByJugadoresId) {
+        this.jugadoresByJugadoresId = jugadoresByJugadoresId;
+    }
+    public Equipos(String nombre, ArrayList<Jugadores> jugador) {
+        this.nombre = nombre;
+        this.jugadoresByJugadoresId = jugador.get(0);
+        this.jugadoresByJugadoresId1 = jugador.get(1);
+    }
+    
     public Equipos(BigDecimal id, Jugadores jugadoresByJugadoresId) {
         this.id = id;
         this.jugadoresByJugadoresId = jugadoresByJugadoresId;
