@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -169,13 +170,18 @@ public class NuevoEquipo extends javax.swing.JPanel {
         ArrayList<Jugadores> jugadores = new ArrayList<Jugadores>();
         Object[] jugador = lista_jugadores.getSelectedValues();
         Jugadores jug;
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < jugador.length; i++) {
             System.out.println(jugador[i].toString());
             jug = oper.InformacionJugador(jugador[i].toString());
             jugadores.add(jug);
         }
-        Equipos equipos = new Equipos(equipo.getText(), jugadores);
-        oper.AgregarEquipo(equipos);
+        if (jugadores.size()==2) {
+            Equipos equipos = new Equipos(equipo.getText(), jugadores);
+            oper.AgregarEquipo(equipos);
+        }else{
+            JOptionPane.showMessageDialog(null, "Los Equipos son de 2 Juagadores");
+        }
+        
     }//GEN-LAST:event_button1ActionPerformed
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
