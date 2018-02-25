@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import org.hibernate.Query;
@@ -72,29 +73,8 @@ public class Operaciones {
         }
         return jugadores;
     }
-    public void crearPartidaEquipos(Equipos equipo1, Equipos equipo2, int puntos){
-        try {
-            SessionFactory sesion = NewHibernateUtil.getSessionFactory();
-            Session session;
-            session=sesion.openSession();
-            session.beginTransaction();
-            Partidas partida = new Partidas(new Date(),new BigDecimal(puntos));
-            PartidosEquipos Partidoequipos1 = new PartidosEquipos(partida, equipo1);
-            PartidosEquipos Partidoequipos2 = new PartidosEquipos(partida, equipo2);
-            
-            session.save(partida);
-            session.save(Partidoequipos1);
-            session.save(Partidoequipos2);
-            session.getTransaction().commit();
-            session.close();
-            JOptionPane.showMessageDialog(null, "Partida creada con exito!");
-        }
-        catch(Exception e) {
-            System.out.println("error");
-        }
-    }
     
-    public Partidas crearPartidaIndividuales(ArrayList<Equipos> equipos, int puntos){
+    public Partidas crearPartida(Set<Equipos> equipos, int puntos){
         try {
             SessionFactory sesion = NewHibernateUtil.getSessionFactory();
             Session session;
@@ -102,10 +82,7 @@ public class Operaciones {
             session.beginTransaction();
             Partidas partida = new Partidas(new Date(),new BigDecimal(puntos));
             session.save(partida);
-            for (int i = 0; i < equipos.size(); i++) {
-                PartidosEquipos Partidoequipos1 = new PartidosEquipos(partida, equipos.get(i));
-                session.save(Partidoequipos1);
-            }     
+            partida.setEquiposes(equipos);
             session.getTransaction().commit();
             session.close();
             return partida;

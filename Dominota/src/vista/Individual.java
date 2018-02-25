@@ -10,7 +10,9 @@ import controlador.Operaciones;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.swing.DefaultListModel;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JList;
@@ -194,7 +196,7 @@ public class Individual extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         List<String> file = ListaIndividual.getSelectedValuesList();
-        ArrayList<Equipos> equipos = new ArrayList<Equipos>();
+        Set<Equipos> equipos = new HashSet<Equipos>();
         System.out.println(file.get(0));
         Partidas partida=null;
         if (file.size() < 2 && file.size()>4) {
@@ -207,13 +209,13 @@ public class Individual extends javax.swing.JPanel {
                 equipos.add(equipo1);
             }
             
-                partida=oper.crearPartidaIndividuales(equipos,Integer.parseInt(PuntosMaximos.getText()));
+                partida=oper.crearPartida(equipos,Integer.parseInt(PuntosMaximos.getText()));
             }catch(Exception e){
                 JOptionPane.showMessageDialog(null, "El puntaje máximo no es válido");
             }
 
         }
-        Juego juego= new Juego(partida);
+        JuegoIndividual juego= new JuegoIndividual(partida);
         juego.setSize(800, 800);
         jPanel1.setSize(800,800);
         juego.setLocation(1, 1);

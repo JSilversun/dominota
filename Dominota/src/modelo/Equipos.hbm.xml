@@ -29,11 +29,13 @@
             </key>
             <one-to-many class="modelo.Rondas" />
         </set>
-        <set name="partidosEquiposes" table="PARTIDOS_EQUIPOS" inverse="true" lazy="true" fetch="select">
+        <set name="Partidas" table="PARTIDOS_EQUIPOS" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="EQUIPOS_ID" precision="22" scale="0" not-null="true" />
             </key>
-            <one-to-many class="modelo.PartidosEquipos" />
+            <many-to-many entity-name="modelo.Partidas" >  
+                <column name="PARTIDAS_ID" not-null="true" />
+            </many-to-many>     
         </set>
     </class>
 </hibernate-mapping>

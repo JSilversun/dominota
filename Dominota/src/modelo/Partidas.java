@@ -19,6 +19,15 @@ public class Partidas  implements java.io.Serializable {
      private BigDecimal maximopunto;
      private Set rondases = new HashSet(0);
      private Set partidosEquiposes = new HashSet(0);
+     private Set<Equipos> equiposes = new HashSet<Equipos>(0);
+
+    public Set<Equipos> getEquiposes() {
+        return equiposes;
+    }
+
+    public void setEquiposes(Set<Equipos> equiposes) {
+        this.equiposes = equiposes;
+    }
 
     public Partidas() {
     }

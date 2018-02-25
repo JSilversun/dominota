@@ -17,9 +17,9 @@ public class Equipos  implements java.io.Serializable {
      private Jugadores jugadoresByJugadoresId;
      private Jugadores jugadoresByJugadoresId1;
      private String nombre;
-     private Set partidases = new HashSet(0);
-     private Set rondases = new HashSet(0);
-     private Set partidosEquiposes = new HashSet(0);
+     private Set<Rondas> rondases = new HashSet<Rondas>(0);
+     private Set<Partidas> partidases = new HashSet<Partidas>(0);
+
 
     public Equipos() {
     }
@@ -53,7 +53,7 @@ public class Equipos  implements java.io.Serializable {
             }
        this.partidases = partidases;
        this.rondases = rondases;
-       this.partidosEquiposes = partidosEquiposes;
+       //this.partidosEquiposes = partidosEquiposes;
     }
    
     public BigDecimal getId() {
@@ -84,28 +84,14 @@ public class Equipos  implements java.io.Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    public Set getPartidases() {
-        return this.partidases;
-    }
-    
-    public void setPartidases(Set partidases) {
-        this.partidases = partidases;
-    }
-    public Set getRondases() {
-        return this.rondases;
-    }
-    
-    public void setRondases(Set rondases) {
-        this.rondases = rondases;
-    }
-    public Set getPartidosEquiposes() {
-        return this.partidosEquiposes;
-    }
-    
-    public void setPartidosEquiposes(Set partidosEquiposes) {
-        this.partidosEquiposes = partidosEquiposes;
+
+    public Set<Partidas> getPartidases() {
+        return partidases;
     }
 
+    public void setPartidases(Set<Partidas> partidases) {
+        this.partidases = partidases;
+    }
 
 
 

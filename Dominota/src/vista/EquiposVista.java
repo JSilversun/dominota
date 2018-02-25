@@ -10,7 +10,9 @@ import controlador.Operaciones;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.swing.DefaultListModel;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JList;
@@ -194,20 +196,30 @@ public class EquiposVista extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         List<String> file = ListaEquipos.getSelectedValuesList();
+        Set<Equipos> equipos = new HashSet<Equipos>();
         System.out.println(file.get(0));
+        Partidas partida=null;
         if (file.size() != 2) {
             JOptionPane.showMessageDialog(null, "El juego debe tener 2 Equipos");
         } else {
             try{
             Integer.parseInt(PuntosMaximos.getText());
-            Equipos equipo1 = oper.ObjetoEquipos(file.get(0));
-            Equipos equipo2 = oper.ObjetoEquipos(file.get(1));
-            oper.crearPartidaEquipos(equipo1,equipo2,Integer.parseInt(PuntosMaximos.getText()));
+            equipos.add(oper.ObjetoEquipos(file.get(0)));
+            equipos.add(oper.ObjetoEquipos(file.get(1)));
+            partida=oper.crearPartida(equipos,Integer.parseInt(PuntosMaximos.getText()));
             }catch(Exception e){
                 JOptionPane.showMessageDialog(null, "El puntaje máximo no es válido");
             }
 
         }
+        JuegoEquipo juego= new JuegoEquipo(partida);
+        juego.setSize(800, 800);
+        jPanel1.setSize(800,800);
+        juego.setLocation(1, 1);
+        jPanel1.removeAll();
+        jPanel1.add(juego, BorderLayout.CENTER);
+        jPanel1.revalidate();
+        jPanel1.repaint();
         //PartidosEquipos equipos= new PartidosEquipos(partida, equipos);
         //oper.AgregarUsuario(juegador);
     }//GEN-LAST:event_jButton1ActionPerformed
