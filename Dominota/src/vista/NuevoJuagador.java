@@ -162,7 +162,7 @@ public class NuevoJuagador extends javax.swing.JFrame {
 
     private void EstadisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EstadisticasActionPerformed
         Estadisticas estadistica= new Estadisticas();
-        estadistica.setSize(350, 160);
+        estadistica.setSize(500, 400);
         estadistica.setLocation(5, 5);
         PanelGeneral.removeAll();
         PanelGeneral.add(estadistica, BorderLayout.CENTER);
@@ -172,7 +172,7 @@ public class NuevoJuagador extends javax.swing.JFrame {
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
         AgragarJugador jugador= new AgragarJugador();
-        jugador.setSize(350, 160);
+        jugador.setSize(500, 400);
         jugador.setLocation(5, 5);
         PanelGeneral.removeAll();
         PanelGeneral.add(jugador, BorderLayout.CENTER);
@@ -182,7 +182,7 @@ public class NuevoJuagador extends javax.swing.JFrame {
 
     private void Equipos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Equipos1ActionPerformed
         NuevoEquipo equipo= new NuevoEquipo();
-        equipo.setSize(400, 400);
+        equipo.setSize(500, 400);
         equipo.setLocation(5, 5);
         PanelGeneral.removeAll();
         PanelGeneral.add(equipo, BorderLayout.CENTER);
@@ -192,7 +192,7 @@ public class NuevoJuagador extends javax.swing.JFrame {
 
     private void PartidaBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PartidaBotonActionPerformed
         InicioNuevaPartida partida= new InicioNuevaPartida();
-        partida.setSize(400, 400);
+        partida.setSize(500, 400);
         partida.setLocation(5, 5);
         PanelGeneral.removeAll();
         PanelGeneral.add(partida, BorderLayout.CENTER);

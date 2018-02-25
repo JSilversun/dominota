@@ -62,6 +62,7 @@ public class NuevoEquipo extends javax.swing.JPanel {
         button1 = new java.awt.Button();
         button2 = new java.awt.Button();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(365, 365));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -148,14 +149,14 @@ public class NuevoEquipo extends javax.swing.JPanel {
                         .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -169,6 +170,7 @@ public class NuevoEquipo extends javax.swing.JPanel {
         Object[] jugador = lista_jugadores.getSelectedValues();
         Jugadores jug;
         for (int i = 0; i < 2; i++) {
+            System.out.println(jugador[i].toString());
             jug = oper.InformacionJugador(jugador[i].toString());
             jugadores.add(jug);
         }

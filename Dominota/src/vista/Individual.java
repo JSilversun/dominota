@@ -193,15 +193,19 @@ public class Individual extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         List<String> file = ListaIndividual.getSelectedValuesList();
+        ArrayList<Equipos> equipos = new ArrayList<Equipos>();
         System.out.println(file.get(0));
-        if (file.size() < 2) {
-            JOptionPane.showMessageDialog(null, "El juego debe tener al menos 2 jugadores");
+        if (file.size() < 2 && file.size()>4) {
+            JOptionPane.showMessageDialog(null, "El juego debe tener al menos 2 y maximo 4  jugadores");
         } else {
             try{
             Integer.parseInt(PuntosMaximos.getText());
-            Equipos equipo1 = oper.ObjetoEquipos(file.get(0));
-            Equipos equipo2 = oper.ObjetoEquipos(file.get(1));
-            oper.crearPartidaEquipos(equipo1,equipo2,Integer.parseInt(PuntosMaximos.getText()));
+            for (int i = 0; i < file.size(); i++) {
+                Equipos equipo1 = oper.ObjetoEquipos(file.get(i));
+                equipos.add(equipo1);
+            }
+            
+                oper.crearPartidaIndividuales(equipos,Integer.parseInt(PuntosMaximos.getText()));
             }catch(Exception e){
                 JOptionPane.showMessageDialog(null, "El puntaje máximo no es válido");
             }

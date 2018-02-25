@@ -87,9 +87,31 @@ public class Operaciones {
             session.save(Partidoequipos2);
             session.getTransaction().commit();
             session.close();
+            JOptionPane.showMessageDialog(null, "Partida creada con exito!");
         }
         catch(Exception e) {
-            
+            System.out.println("error");
+        }
+    }
+    
+    public void crearPartidaIndividuales(ArrayList<Equipos> equipos, int puntos){
+        try {
+            SessionFactory sesion = NewHibernateUtil.getSessionFactory();
+            Session session;
+            session=sesion.openSession();
+            session.beginTransaction();
+            Partidas partida = new Partidas(new Date(),new BigDecimal(puntos));
+            session.save(partida);
+            for (int i = 0; i < equipos.size(); i++) {
+                PartidosEquipos Partidoequipos1 = new PartidosEquipos(partida, equipos.get(i));
+                session.save(Partidoequipos1);
+            }     
+            session.getTransaction().commit();
+            session.close();
+            JOptionPane.showMessageDialog(null, "Partida creada con exito!");
+        }
+        catch(Exception e) {
+            System.out.println("error");
         }
     }
     
@@ -105,6 +127,7 @@ public class Operaciones {
         }
         return null;
     }
+    
     public ArrayList<Equipos> ConsultarEquiposes(){
         ArrayList<Equipos> equipos = null;
         try {
