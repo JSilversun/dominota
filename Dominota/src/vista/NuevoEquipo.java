@@ -42,7 +42,6 @@ public class NuevoEquipo extends javax.swing.JPanel {
         }
         lista_jugadores.setModel(DLM);
         lista_jugadores.setSelectionModel(new LimitedSelectionModel(lista_jugadores,2));
-        lista_jugadores.addListSelectionListener(new ListListener());
     }
 
     /**
@@ -187,17 +186,6 @@ public class NuevoEquipo extends javax.swing.JPanel {
         jPanel1.repaint();
     }//GEN-LAST:event_button2ActionPerformed
 
-    public class ListListener implements ListSelectionListener {
-
-        public void valueChanged(ListSelectionEvent e) {
-            indices = lista_jugadores.getSelectedIndices();
-            if (indices.length > 2) {
-                System.out.println("Solo puede seleccionar 2 jugadores por equipo");
-                System.out.println(lista_jugadores);
-                lista_jugadores.setSelectedIndices(Arrays.copyOfRange(indices, 1, indices.length));
-            }
-        }
-    }
     
     private static class LimitedSelectionModel extends DefaultListSelectionModel {
 

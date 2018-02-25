@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.DefaultListSelectionModel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -26,18 +27,55 @@ public class EquiposVista extends javax.swing.JPanel {
     protected ArrayList<Equipos> equipo;
     protected DefaultListModel DLM;
     Date fecha;
+
     public EquiposVista() {
         initComponents();
-        
+
         oper = new Operaciones();
         DLM = new DefaultListModel();
         fecha = new Date();
         this.equipo = oper.ConsultarEquiposes();
-        for(Equipos equipos : this.equipo) {
-            DLM.addElement(equipos.getNombre()); 
+        for (Equipos equipos : this.equipo) {
+            DLM.addElement(equipos.getNombre());
         }
         ListaEquipos.setModel(DLM);
-        
+        ListaEquipos.setSelectionModel(new LimitedSelectionModel(ListaEquipos, 2));
+
+    }
+
+    private static class LimitedSelectionModel extends DefaultListSelectionModel {
+
+        private JList list;
+        private int maxCount;
+
+        private LimitedSelectionModel(JList list, int maxCount) {
+            this.list = list;
+            this.maxCount = maxCount;
+        }
+
+        @Override
+        public void setSelectionInterval(int index0, int index1) {
+            if (index1 - index0 >= maxCount) {
+                index1 = index0 + maxCount - 1;
+            }
+            super.setSelectionInterval(index0, index1);
+        }
+
+        @Override
+        public void addSelectionInterval(int index0, int index1) {
+            int selectionLength = list.getSelectedIndices().length;
+            if (selectionLength >= maxCount) {
+                return;
+            }
+
+            if (index1 - index0 >= maxCount - selectionLength) {
+                index1 = index0 + maxCount - 1 - selectionLength;
+            }
+            if (index1 < index0) {
+                return;
+            }
+            super.addSelectionInterval(index0, index1);
+        }
     }
 
     /**
@@ -155,19 +193,22 @@ public class EquiposVista extends javax.swing.JPanel {
     }//GEN-LAST:event_PuntosMaximosActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    Partidas partida = new Partidas(fecha, new BigDecimal(PuntosMaximos.getText()));
-    List<String> file = ListaEquipos.getSelectedValuesList();
-    System. out. println(file.get(0));
-    if (file.size()!=2) {
-        JOptionPane.showMessageDialog(null,"El juego debe tener 2 Equipos");
-    }else{
-        Equipos equipo1= oper.ObjetoEquipos(file.get(0));
-        Equipos equipo2= oper.ObjetoEquipos(file.get(1));
-        PartidosEquipos Partidoequipos1= new PartidosEquipos(partida, equipo1);
-        PartidosEquipos Partidoequipos2= new PartidosEquipos(partida, equipo2);
-        
-    }
-    //PartidosEquipos equipos= new PartidosEquipos(partida, equipos);
+        List<String> file = ListaEquipos.getSelectedValuesList();
+        System.out.println(file.get(0));
+        if (file.size() != 2) {
+            JOptionPane.showMessageDialog(null, "El juego debe tener 2 Equipos");
+        } else {
+            try{
+            Integer.parseInt(PuntosMaximos.getText());
+            Equipos equipo1 = oper.ObjetoEquipos(file.get(0));
+            Equipos equipo2 = oper.ObjetoEquipos(file.get(1));
+            oper.crearPartidaEquipos(equipo1,equipo2,Integer.parseInt(PuntosMaximos.getText()));
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, "El puntaje máximo no es válido");
+            }
+
+        }
+        //PartidosEquipos equipos= new PartidosEquipos(partida, equipos);
         //oper.AgregarUsuario(juegador);
     }//GEN-LAST:event_jButton1ActionPerformed
 

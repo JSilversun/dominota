@@ -24,10 +24,16 @@ public class Equipos  implements java.io.Serializable {
     public Equipos() {
     }
     public Equipos(Jugadores jugadoresByJugadoresId) {
+        this.nombre=jugadoresByJugadoresId.getNombre();
         this.jugadoresByJugadoresId = jugadoresByJugadoresId;
     }
     public Equipos(String nombre, ArrayList<Jugadores> jugador) {
         this.nombre = nombre;
+        System.out.println("const "+nombre);
+            if(nombre.isEmpty()){
+                System.out.println("Empty");
+                this.nombre=jugador.get(0).getNombre()+"_"+jugador.get(1).getNombre();
+            }
         this.jugadoresByJugadoresId = jugador.get(0);
         this.jugadoresByJugadoresId1 = jugador.get(1);
     }
@@ -41,6 +47,10 @@ public class Equipos  implements java.io.Serializable {
        this.jugadoresByJugadoresId = jugadoresByJugadoresId;
        this.jugadoresByJugadoresId1 = jugadoresByJugadoresId1;
        this.nombre = nombre;
+        System.out.println("Nombre del equipo "+nombre);
+            if(nombre==null || nombre.isEmpty()){
+                this.nombre=jugadoresByJugadoresId.getNombre()+"_"+jugadoresByJugadoresId1.getNombre();
+            }
        this.partidases = partidases;
        this.rondases = rondases;
        this.partidosEquiposes = partidosEquiposes;

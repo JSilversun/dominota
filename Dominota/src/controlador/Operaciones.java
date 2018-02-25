@@ -7,6 +7,7 @@ package controlador;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -71,6 +72,26 @@ public class Operaciones {
         }
         return jugadores;
     }
+    public void crearPartidaEquipos(Equipos equipo1, Equipos equipo2, int puntos){
+        try {
+            SessionFactory sesion = NewHibernateUtil.getSessionFactory();
+            Session session;
+            session=sesion.openSession();
+            session.beginTransaction();
+            Partidas partida = new Partidas(new Date(),new BigDecimal(puntos));
+            PartidosEquipos Partidoequipos1 = new PartidosEquipos(partida, equipo1);
+            PartidosEquipos Partidoequipos2 = new PartidosEquipos(partida, equipo2);
+            
+            session.save(partida);
+            session.save(Partidoequipos1);
+            session.save(Partidoequipos2);
+            session.getTransaction().commit();
+            session.close();
+        }
+        catch(Exception e) {
+            
+        }
+    }
     
     public Jugadores InformacionJugador(String nombre){
         try {
@@ -78,10 +99,6 @@ public class Operaciones {
             Session session;
             session=sesion.openSession();
             session.beginTransaction();
-            Query query = session.createQuery("from Jugadores where nombre =:nombre");
-            query.setParameter("nombre", nombre);
-            Jugadores jugador = (Jugadores) query.uniqueResult();
-            return jugador;
         }
         catch(Exception e) {
             
