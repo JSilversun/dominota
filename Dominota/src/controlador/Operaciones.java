@@ -99,6 +99,10 @@ public class Operaciones {
             Session session;
             session=sesion.openSession();
             session.beginTransaction();
+            Query query = session.createQuery("from Jugadores where nombre =:nombre");
+            query.setParameter("nombre", nombre);
+            Jugadores jugador = (Jugadores) query.uniqueResult();
+            return jugador;
         }
         catch(Exception e) {
             
