@@ -108,4 +108,23 @@ public class Operaciones {
         }
         return equipos;
     }
+    
+    public Equipos ObjetoEquipos(String nombre){
+       
+        try {
+            SessionFactory sesion = NewHibernateUtil.getSessionFactory();
+            Session session;
+            session=sesion.openSession();
+            session.beginTransaction();
+            Query query = session.createQuery("from Equipos where nombre =?");
+            query.setString(0,nombre);
+            Equipos equipo= (Equipos) query.uniqueResult();
+            return equipo;
+        }
+        catch(Exception e) {
+            System.out.println("Algo salio mal");
+            return null;
+        }
+        
+    } 
 }

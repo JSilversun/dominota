@@ -7,24 +7,31 @@ package vista;
 
 import java.awt.BorderLayout;
 import controlador.Operaciones;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import modelo.Equipos;
 import modelo.Jugadores;
+import modelo.Partidas;
+import modelo.PartidosEquipos;
 
 public class EquiposVista extends javax.swing.JPanel {
 
     Operaciones oper;
     protected ArrayList<Equipos> equipo;
     protected DefaultListModel DLM;
-    
+    Date fecha;
     public EquiposVista() {
         initComponents();
         
         oper = new Operaciones();
         DLM = new DefaultListModel();
+        fecha = new Date();
         this.equipo = oper.ConsultarEquiposes();
         for(Equipos equipos : this.equipo) {
             DLM.addElement(equipos.getNombre()); 
@@ -45,7 +52,7 @@ public class EquiposVista extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         label1 = new java.awt.Label();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        PuntosMaximos = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         ListaEquipos = new javax.swing.JList<>();
         jButton1 = new javax.swing.JButton();
@@ -61,11 +68,11 @@ public class EquiposVista extends javax.swing.JPanel {
         jLabel1.setText("Puntos Maximos");
         jLabel1.setToolTipText("");
 
-        jTextField1.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
-        jTextField1.setText("100");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        PuntosMaximos.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
+        PuntosMaximos.setText("100");
+        PuntosMaximos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                PuntosMaximosActionPerformed(evt);
             }
         });
 
@@ -79,6 +86,11 @@ public class EquiposVista extends javax.swing.JPanel {
         jButton1.setBackground(new java.awt.Color(204, 204, 255));
         jButton1.setText("Crear Partida");
         jButton1.setToolTipText("");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -92,7 +104,7 @@ public class EquiposVista extends javax.swing.JPanel {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(PuntosMaximos, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -112,7 +124,7 @@ public class EquiposVista extends javax.swing.JPanel {
                 .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(PuntosMaximos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
@@ -138,18 +150,35 @@ public class EquiposVista extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void PuntosMaximosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PuntosMaximosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_PuntosMaximosActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    Partidas partida = new Partidas(fecha, new BigDecimal(PuntosMaximos.getText()));
+    List<String> file = ListaEquipos.getSelectedValuesList();
+    System. out. println(file.get(0));
+    if (file.size()!=2) {
+        JOptionPane.showMessageDialog(null,"El juego debe tener 2 Equipos");
+    }else{
+        Equipos equipo1= oper.ObjetoEquipos(file.get(0));
+        Equipos equipo2= oper.ObjetoEquipos(file.get(1));
+        PartidosEquipos Partidoequipos1= new PartidosEquipos(partida, equipo1);
+        PartidosEquipos Partidoequipos2= new PartidosEquipos(partida, equipo2);
+        
+    }
+    //PartidosEquipos equipos= new PartidosEquipos(partida, equipos);
+        //oper.AgregarUsuario(juegador);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> ListaEquipos;
+    private javax.swing.JTextField PuntosMaximos;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private java.awt.Label label1;
     // End of variables declaration//GEN-END:variables
 }
