@@ -187,5 +187,31 @@ public class Operaciones {
             return null;
         }
         
-    } 
+    }
+    
+    public List<Object[]> PartidasGanadas(){
+        List<Object[]> lista = null;
+        try {
+            SessionFactory sesion = NewHibernateUtil.getSessionFactory();
+            Session session;
+            session=sesion.openSession();
+            session.beginTransaction();
+            Query query = session.createQuery("select JUGADORES.NOMBRE, sum(num) from \n" +
+                                        "(select EQUIPOS.JUGADORES_ID as jugador, count(*) as num FROM partidas, EQUIPOS \n" +
+                                        "WHERE partidas.EQUIPOS_ID = EQUIPOS.ID group by EQUIPOS.JUGADORES_ID\n" +
+                                        "UNION all\n" +
+                                        "select EQUIPOS.JUGADORES_ID1, count(*) FROM partidas, EQUIPOS \n" +
+                                        "WHERE partidas.EQUIPOS_ID = EQUIPOS.ID and\n" +
+                                        "EQUIPOS.JUGADORES_ID1 is not null group by EQUIPOS.JUGADORES_ID1), \n" +
+                                        "JUGADORES WHERE JUGADORES.ID=jugador GROUP BY JUGADORES.NOMBRE");
+            lista = query.list();
+            for (Object[] datos : lista) {
+             System.out.println(datos[0] + "--" + datos[1]);
+            }
+        }
+        catch(Exception e) {
+            
+        }
+        return null;
+    }
 }
