@@ -20,11 +20,13 @@ import modelo.*;
 public class Operaciones {
     public void AgregarUsuario(Jugadores jugador){
       try {
+      Equipos equipo_individual=new Equipos(jugador);
       SessionFactory sesion = NewHibernateUtil.getSessionFactory();
       Session session;
       session=sesion.openSession();
       session.beginTransaction();
       session.save(jugador);
+      session.save(equipo_individual);
       session.getTransaction().commit();
       session.close();
       JOptionPane.showMessageDialog(null,"Crado correctamente");

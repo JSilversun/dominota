@@ -6,7 +6,7 @@
     <class name="modelo.Equipos" table="EQUIPOS" schema="USUARIODOMINOTA" optimistic-lock="version">
         <id name="id" type="big_decimal">
             <column name="ID" precision="22" scale="0" />
-            <generator class="assigned" />
+            <generator class="increment" />
         </id>
         <many-to-one name="jugadoresByJugadoresId" class="modelo.Jugadores" fetch="select">
             <column name="JUGADORES_ID" precision="22" scale="0" not-null="true" />

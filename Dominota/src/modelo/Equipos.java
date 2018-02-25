@@ -22,7 +22,9 @@ public class Equipos  implements java.io.Serializable {
 
     public Equipos() {
     }
-
+    public Equipos(Jugadores jugadoresByJugadoresId) {
+        this.jugadoresByJugadoresId = jugadoresByJugadoresId;
+    }
 	
     public Equipos(BigDecimal id, Jugadores jugadoresByJugadoresId) {
         this.id = id;
