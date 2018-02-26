@@ -19,6 +19,15 @@ public class Equipos  implements java.io.Serializable {
      private String nombre;
      private Set<Rondas> rondases = new HashSet<Rondas>(0);
      private Set<Partidas> partidases = new HashSet<Partidas>(0);
+     private Set partidosEquiposes = new HashSet(0);
+
+    public Set getPartidosEquiposes() {
+        return partidosEquiposes;
+    }
+
+    public void setPartidosEquiposes(Set partidosEquiposes) {
+        this.partidosEquiposes = partidosEquiposes;
+    }
 
     public Set<Rondas> getRondases() {
         return rondases;

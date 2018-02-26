@@ -265,7 +265,7 @@ public class Operaciones {
                 + "from "
                 + "Jugadores as j" ;
         String sql="select j.nombre, sum(case when r.equipos=e.id then r.puntos else 0 end) as total from Partidas p join p.equiposes e left join p.rondases r, Jugadores j WHERE (e.jugadoresByJugadoresId=j.id or e.jugadoresByJugadoresId1=j.id) group by j.nombre,r.partidas.id having sum(case when r.equipos=e.id then r.puntos else 0 end)=0";
-        Query query = session.createQuery(sql); 
+        Query query = session.createQuery(hql); 
         
         lista = query.list();
         System.out.println(lista);

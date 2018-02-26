@@ -27,5 +27,11 @@
             <key column="PARTIDAS_ID" />
             <many-to-many class="modelo.Equipos" column="EQUIPOS_ID"/>
         </set>
+        <set name="partidosEquiposes" table="PARTIDOS_EQUIPOS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PARTIDAS_ID" precision="22" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="modelo.PartidosEquipos" />
+        </set>
     </class>
 </hibernate-mapping>

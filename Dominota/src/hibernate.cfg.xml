@@ -6,9 +6,10 @@
     <property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:XE</property>
     <property name="hibernate.connection.username">UsuarioDominota</property>
     <property name="hibernate.connection.password">Dominota</property>
-    <property name="hibernate.dialect">org.hibernate.dialect.Oracle9Dialect</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
     <property name="show_sql">true</property>
     <mapping resource="modelo/Equipos.hbm.xml"/>
+    <mapping resource="modelo/PartidosEquipos.hbm.xml"/>
     <mapping resource="modelo/Partidas.hbm.xml"/>
     <mapping resource="modelo/Jugadores.hbm.xml"/>
     <mapping resource="modelo/Rondas.hbm.xml"/>

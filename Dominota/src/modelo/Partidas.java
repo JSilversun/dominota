@@ -25,6 +25,10 @@ public class Partidas  implements java.io.Serializable {
     public Partidas() {
     }
 
+    public void setPartidosEquiposes(Set partidosEquiposes) {
+        this.partidosEquiposes = partidosEquiposes;
+    }
+
     public Partidas(Date fecha, BigDecimal maximopunto) {
         this.fecha = fecha;
         this.maximopunto = maximopunto;

@@ -4,6 +4,7 @@
   <schema-selection match-schema="USUARIODOMINOTA"/>
   <table-filter match-name="RONDAS"/>
   <table-filter match-name="EQUIPOS"/>
+  <table-filter match-name="PARTIDOS_EQUIPOS"/>
   <table-filter match-name="PARTIDAS"/>
   <table-filter match-name="JUGADORES"/>
 </hibernate-reverse-engineering>
