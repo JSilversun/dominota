@@ -228,9 +228,10 @@ public class JuegoEquipo extends javax.swing.JPanel {
                 System.out.println(e.getId());
                 if (e.getId().toString().equals(row[0].toString())) {
                     band = true;
-                    if ((Integer.parseInt(row[1].toString())) > Integer.parseInt(partida.getMaximopunto().toString())) {
+                    if ((Integer.parseInt(row[1].toString())) >= Integer.parseInt(partida.getMaximopunto().toString())) {
                         JOptionPane.showMessageDialog(null, "Ha ganado el jugador/equipo: " + e.getNombre());
                         finJuego = true;
+                        oper.actualizarGanador(partida,e);
                     }
                     array[i + 1] += "/" + row[1];
                 }

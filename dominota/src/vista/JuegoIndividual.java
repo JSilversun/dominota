@@ -298,8 +298,9 @@ public class JuegoIndividual extends javax.swing.JPanel {
                 if(e.getId().toString().equals(row[0].toString())){
                     System.out.println(row[0]);
                     band=true;
-                    if((Integer.parseInt(row[1].toString()))>Integer.parseInt(partida.getMaximopunto().toString())){
+                    if((Integer.parseInt(row[1].toString()))>=Integer.parseInt(partida.getMaximopunto().toString())){
                         JOptionPane.showMessageDialog(null, "Ha ganado el jugador/equipo: "+e.getNombre());
+                        oper.actualizarGanador(partida,e);
                         finJuego=true;
                     }
                     array[i+1]+="/"+row[1];

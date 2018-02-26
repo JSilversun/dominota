@@ -74,7 +74,22 @@ public class Operaciones {
         }
         return jugadores;
     }
-    
+    public void actualizarGanador(Partidas partida, Equipos e){
+        try {
+            SessionFactory sesion = NewHibernateUtil.getSessionFactory();
+            Session session;
+            session=sesion.openSession();
+            session.beginTransaction();
+            partida.setEquipos(e);
+            session.save(partida);
+            session.getTransaction().commit();
+            session.close();
+            //JOptionPane.showMessageDialog(null, "Partida creada con exito!");
+        }
+        catch(Exception ex) {
+            System.out.println("error");
+        }
+    }
     public Partidas crearPartida(Set<Equipos> equiposes, int puntos){
         try {
             SessionFactory sesion = NewHibernateUtil.getSessionFactory();
@@ -242,7 +257,7 @@ public class Operaciones {
 
     public List<Object[]> PartidasEnCero(){
     List<Object[]> lista = null;
-    //try {
+    try {
         SessionFactory sesion = NewHibernateUtil.getSessionFactory();
         Session session;
         session=sesion.openSession();
