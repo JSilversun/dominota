@@ -5,6 +5,11 @@
  */
 package vista;
 
+import controlador.Operaciones;
+import java.awt.BorderLayout;
+import java.util.List;
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author loreanaisabel
@@ -14,8 +19,12 @@ public class Estadisticas extends javax.swing.JPanel {
     /**
      * Creates new form Estadisticas
      */
+    
+    Operaciones oper;
+    protected DefaultListModel DLM;
     public Estadisticas() {
         initComponents();
+        this.oper = new Operaciones();
     }
 
     /**
@@ -27,12 +36,68 @@ public class Estadisticas extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        button1 = new java.awt.Button();
         label1 = new java.awt.Label();
+        jColorChooser1 = new javax.swing.JColorChooser();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        button2 = new java.awt.Button();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        button1.setActionCommand("Jugadores con partidas");
+        button1.setBackground(new java.awt.Color(153, 204, 255));
+        button1.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
+        button1.setForeground(new java.awt.Color(0, 0, 0));
+        button1.setLabel("Jugadores con partidas");
+        button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button1ActionPerformed(evt);
+            }
+        });
 
         label1.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
         label1.setText("Estadisticas");
+
+        setBackground(new java.awt.Color(204, 204, 204));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
+        jLabel1.setText("Estadísticas");
+
+        button2.setActionCommand("Partidas por Jugador");
+        button2.setBackground(new java.awt.Color(153, 204, 255));
+        button2.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
+        button2.setForeground(new java.awt.Color(0, 0, 0));
+        button2.setLabel("Partidas por Jugador");
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(84, 84, 84)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(164, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(105, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -40,20 +105,45 @@ public class Estadisticas extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(254, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(167, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        
+    }//GEN-LAST:event_button1ActionPerformed
+
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        PartidasJugador partidas = new PartidasJugador();
+        partidas.setSize(450, 400);
+        partidas.setLocation(2, 5);
+        jPanel1.removeAll();
+        jPanel1.add(partidas, BorderLayout.CENTER);
+        jPanel1.revalidate();
+        jPanel1.repaint();
+        /*DLM = new DefaultListModel();
+        for (Object[] aRow : partidas) {
+            DLM.addElement(aRow[0]);
+        }*/
+        /*lista_jugadores.setModel(DLM);
+        lista_jugadores.setSelectionModel(new LimitedSelectionModel(lista_jugadores,2));*/
+    }//GEN-LAST:event_button2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.awt.Button button1;
+    private java.awt.Button button2;
+    private javax.swing.JColorChooser jColorChooser1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private java.awt.Label label1;
     // End of variables declaration//GEN-END:variables
 }

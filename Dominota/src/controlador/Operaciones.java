@@ -188,4 +188,56 @@ public class Operaciones {
         }
         
     } 
+    
+    public List<Object[]> PartidasJugador(){
+       
+        try {
+            SessionFactory sesion = NewHibernateUtil.getSessionFactory();
+            Session session;
+            session=sesion.openSession();
+            session.beginTransaction();
+            //select equipos.id, count(*) FROM Partidas group by equipos.id
+            /*Query partidas_individuales = session.createQuery(
+                "SELECT e.jugadoresByJugadoresId.nombre, COUNT(*), (SELECT COUNT(*) "+
+                                                                   "FROM Equipos eq, PartidosEquipos pe, Jugadores j "+   
+                                                                   "WHERE eq.jugadoresByJugadoresId1.id IS NOT NULL AND pe.equipos.id=eq.id AND (eq.jugadoresByJugadoresId=e.jugadoresByJugadoresId.id OR eq.jugadoresByJugadoresId1=e.jugadoresByJugadoresId.id) "+
+                                                                   "GROUP BY e.jugadoresByJugadoresId.id, e.jugadoresByJugadoresId.nombre) "+
+                "FROM Equipos e , PartidosEquipos pe "+
+                "WHERE e.jugadoresByJugadoresId1.id IS NULL AND pe.equipos.id=e.id "+
+                "GROUP BY e.jugadoresByJugadoresId.id, e.jugadoresByJugadoresId.nombre "+
+                "ORDER BY e.jugadoresByJugadoresId.nombre ASC"
+            );*/
+            /*Query partidas_individuales = session.createQuery(
+                "SELECT e.id, e.jugadoresByJugadoresId.nombre, jugadoresByJugadoresId1.id, (SELECT COUNT(*) "+
+                                                                                            "FROM PartidosEquipos pe "+
+                                                                                            "WHERE pe.equipos.id=e.id AND e.jugadoresByJugadoresId1.id IS NULL), "+
+                                                                                            "(SELECT COUNT(*) "+
+                                                                                            "FROM PartidosEquipos pp "+
+                                                                                            "WHERE pp.equipos.id=e.id AND (e.jugadoresByJugadoresId.id=pp.equipos.jugadoresByJugadoresId.id OR e.jugadoresByJugadoresId1.id=pp.equipos.jugadoresByJugadoresId.id)) "+
+                "FROM Equipos e"
+            );*/
+            Query partidas_jugador = session.createQuery(
+                "SELECT j.nombre, (SELECT COUNT(*) "+
+                                  "FROM Equipos e, PartidosEquipos pe "+
+                                  "WHERE e.jugadoresByJugadoresId.nombre=j.nombre AND e.jugadoresByJugadoresId1.id IS NULL AND e.id=pe.equipos.id), "+
+                                  "(SELECT COUNT(*) "+
+                                  "FROM Equipos ee, PartidosEquipos pp "+
+                                  "WHERE ((ee.jugadoresByJugadoresId.nombre=j.nombre AND ee.jugadoresByJugadoresId1.id IS NOT NULL) OR ee.jugadoresByJugadoresId1.nombre=j.nombre) AND ee.id=pp.equipos.id) "+
+                "FROM Jugadores j"
+            );
+            List<Object[]> partidas = partidas_jugador.list();
+            for (Object[] aRow : partidas) {
+                //System.out.println(aRow[0] + " " + aRow[1] + " " + aRow[2]);
+                //System.out.println(aRow[0] + " " + aRow[1] + " " + aRow[2] + " " + aRow[3] + " " + aRow[4]);
+                System.out.println(aRow[0] + " " + aRow[1] + " " + aRow[2]);
+            }
+            
+            return partidas;
+        }
+        catch(Exception e) {
+            System.out.println(e);
+        }
+        
+        return null;
+    }
 }
