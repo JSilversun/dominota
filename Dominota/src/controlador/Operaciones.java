@@ -18,6 +18,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import modelo.*;
+import org.hibernate.HibernateException;
 
 public class Operaciones {
     public void AgregarUsuario(Jugadores jugador){
@@ -74,15 +75,16 @@ public class Operaciones {
         return jugadores;
     }
     
-    public Partidas crearPartida(Set<Equipos> equipos, int puntos){
+    public Partidas crearPartida(Set<Equipos> equiposes, int puntos){
         try {
             SessionFactory sesion = NewHibernateUtil.getSessionFactory();
             Session session;
             session=sesion.openSession();
             session.beginTransaction();
             Partidas partida = new Partidas(new Date(),new BigDecimal(puntos));
+            
+            partida.setEquiposes(equiposes);
             session.save(partida);
-            partida.setEquiposes(equipos);
             session.getTransaction().commit();
             session.close();
             return partida;
@@ -159,6 +161,7 @@ public class Operaciones {
             Query query = session.createQuery("from Equipos where nombre =?");
             query.setString(0,nombre);
             Equipos equipo= (Equipos) query.uniqueResult();
+            session.close();
             return equipo;
         }
         catch(Exception e) {
@@ -167,4 +170,43 @@ public class Operaciones {
         }
         
     } 
+    public List<Object[]> totalEnPartida(BigDecimal partida_id, BigDecimal equipo_id){
+    //try {
+            SessionFactory sesion = NewHibernateUtil.getSessionFactory();
+            Session session;
+            session=sesion.openSession();
+            session.beginTransaction();
+            //"SELECT e.id, SUM(r.puntos),p.id from Rondas r join r.equipos e join r.partidas p where r.partidas.id=? group by r.equipos.id, r.partidas.id"
+            Query query = session.createQuery(
+                    "SELECT e.id, SUM(r.puntos),p.id from Rondas r join r.equipos e join r.partidas p where r.partidas.id=? and r.equipos.id=? group by r.equipos.id, r.partidas.id");
+            query.setBigDecimal(0,partida_id);
+            query.setBigDecimal(1,equipo_id);
+            List<Object[]>result=query.list();
+            session.close();
+            return result;
+            
+            
+        //}
+        //catch(Exception e) {
+        //    System.out.println("Algo salio mal");
+        //}
+        //return null;
+    }
+    public void agregarRonda(Partidas p, Equipos e, int puntos, int nro) {
+        try {
+            SessionFactory sesion = NewHibernateUtil.getSessionFactory();
+            Session session;
+            session=sesion.openSession();
+            session.beginTransaction();
+            
+            Rondas ronda= new Rondas(p,e,new BigDecimal(nro),new BigDecimal(puntos));
+            
+            session.save(ronda);
+            
+            session.getTransaction().commit();
+            session.close();
+        }catch(HibernateException ex) {
+            System.out.println("Algo salio mal");
+        }
+    }
 }

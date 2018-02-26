@@ -23,13 +23,9 @@
             </key>
             <one-to-many class="modelo.Rondas" />
         </set>
-        <set name="equiposes" table="PARTIDOS_EQUIPOS" inverse="false" lazy="true" fetch="select" cascade="all">
-            <key>
-                <column name="PARTIDAS_ID" precision="22" scale="0" not-null="true" />
-            </key>
-            <many-to-many entity-name="modelo.Equipos">
-                <column name="EQUIPOS_ID" not-null="true" />
-            </many-to-many>
+        <set name="equiposes" table="PARTIDOS_EQUIPOS" lazy="true" fetch="select" cascade="all">
+            <key column="PARTIDAS_ID" />
+            <many-to-many class="modelo.Equipos" column="EQUIPOS_ID"/>
         </set>
     </class>
 </hibernate-mapping>

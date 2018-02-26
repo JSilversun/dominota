@@ -21,29 +21,20 @@ public class Partidas  implements java.io.Serializable {
      private Set partidosEquiposes = new HashSet(0);
      private Set<Equipos> equiposes = new HashSet<Equipos>(0);
 
-    public Set<Equipos> getEquiposes() {
-        return equiposes;
-    }
-
-    public void setEquiposes(Set<Equipos> equiposes) {
-        this.equiposes = equiposes;
-    }
 
     public Partidas() {
     }
 
-	
     public Partidas(Date fecha, BigDecimal maximopunto) {
         this.fecha = fecha;
         this.maximopunto = maximopunto;
     }
-    public Partidas(BigDecimal id, Equipos equipos, Date fecha, BigDecimal maximopunto, Set rondases, Set partidosEquiposes) {
+    public Partidas(BigDecimal id, Equipos equipos, Date fecha, BigDecimal maximopunto, Set rondases) {
        this.id = id;
        this.equipos = equipos;
        this.fecha = fecha;
        this.maximopunto = maximopunto;
        this.rondases = rondases;
-       this.partidosEquiposes = partidosEquiposes;
     }
    
     public BigDecimal getId() {
@@ -85,11 +76,15 @@ public class Partidas  implements java.io.Serializable {
         return this.partidosEquiposes;
     }
     
-    public void setPartidosEquiposes(Set partidosEquiposes) {
-        this.partidosEquiposes = partidosEquiposes;
+    public Set<Equipos> getEquiposes() {
+        return equiposes;
     }
 
+    public void setEquiposes(Set<Equipos> equiposes) {
+        this.equiposes = equiposes;
+    }
 
+  
 
 
 }

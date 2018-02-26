@@ -21,7 +21,6 @@ import javax.swing.ListSelectionModel;
 import modelo.Equipos;
 import modelo.Jugadores;
 import modelo.Partidas;
-import modelo.PartidosEquipos;
 
 /**
  *
@@ -208,21 +207,21 @@ public class Individual extends javax.swing.JPanel {
                 Equipos equipo1 = oper.ObjetoEquipos(file.get(i));
                 equipos.add(equipo1);
             }
-            
-                partida=oper.crearPartida(equipos,Integer.parseInt(PuntosMaximos.getText()));
+            partida=oper.crearPartida(equipos,Integer.parseInt(PuntosMaximos.getText()));
+            JuegoIndividual juego= new JuegoIndividual(partida);
+            juego.setSize(800, 800);
+            jPanel1.setSize(800,800);
+            juego.setLocation(1, 1);
+            jPanel1.removeAll();
+            jPanel1.add(juego, BorderLayout.CENTER);
+            jPanel1.revalidate();
+            jPanel1.repaint();
             }catch(Exception e){
                 JOptionPane.showMessageDialog(null, "El puntaje máximo no es válido");
             }
 
         }
-        JuegoIndividual juego= new JuegoIndividual(partida);
-        juego.setSize(800, 800);
-        jPanel1.setSize(800,800);
-        juego.setLocation(1, 1);
-        jPanel1.removeAll();
-        jPanel1.add(juego, BorderLayout.CENTER);
-        jPanel1.revalidate();
-        jPanel1.repaint();
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

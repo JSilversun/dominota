@@ -5,6 +5,15 @@
  */
 package vista;
 
+import controlador.Operaciones;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import modelo.Equipos;
 import modelo.Partidas;
 
 /**
@@ -16,11 +25,44 @@ public class JuegoEquipo extends javax.swing.JPanel {
     /**
      * Creates new form JuegoEquipo
      */
-    
+    Operaciones oper;
+    private ArrayList<JButton> buttons = new ArrayList<JButton>();
+    private ArrayList<JLabel> labels = new ArrayList<JLabel>();
+    private int num_ronda;
     private Partidas partida;
+    private boolean finJuego = false;
+
     public JuegoEquipo(Partidas partida) {
         initComponents();
-        this.partida=partida;
+
+        num_ronda = 1;
+
+        oper = new Operaciones();
+        buttons.add(agregar_ronda1);
+        buttons.add(agregar_ronda2);
+
+        labels.add(nombre_equipo1);
+        labels.add(nombre_equipo2);
+
+        maximo.setText(partida.getMaximopunto().toString());
+        System.out.println("----");
+        this.partida = partida;
+        int i = 0;
+        for (Equipos e : partida.getEquiposes()) {
+            labels.get(i).setText(e.getNombre());
+            i++;
+        }
+    }
+
+    private Equipos buscarEquipo(int index) {
+        int i = 0;
+        for (Equipos e : partida.getEquiposes()) {
+            if (index == i) {
+                return e;
+            }
+            i++;
+        }
+        return null;
     }
 
     /**
@@ -32,27 +74,18 @@ public class JuegoEquipo extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        nombre_equipo1 = new javax.swing.JLabel();
-        nombre_equipo2 = new javax.swing.JLabel();
-        agregar_ronda1 = new javax.swing.JButton();
+        container = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         agregar_ronda2 = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        agregar_ronda1 = new javax.swing.JButton();
+        maximo = new javax.swing.JLabel();
+        nombre_equipo2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablero = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        nombre_equipo1 = new javax.swing.JLabel();
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        nombre_equipo1.setText("Equipo1");
-
-        nombre_equipo2.setText("Equipo2");
-
-        agregar_ronda1.setText("+");
-        agregar_ronda1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                agregar_ronda1ActionPerformed(evt);
-            }
-        });
+        container.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel5.setText("Máximo:");
@@ -60,99 +93,164 @@ public class JuegoEquipo extends javax.swing.JPanel {
         agregar_ronda2.setText("+");
         agregar_ronda2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                agregar_ronda2ActionPerformed(evt);
+                agregar_ronda(evt);
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel6.setText("100");
+        agregar_ronda1.setText("+");
+        agregar_ronda1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                agregar_ronda(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 390, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 124, Short.MAX_VALUE)
-        );
+        maximo.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        maximo.setText("100");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+        nombre_equipo2.setText("Equipo 2");
+
+        tablero.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3"
+            }
+        ));
+        tablero.setTableHeader(null);
+        jScrollPane2.setViewportView(tablero);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setText("#");
+
+        nombre_equipo1.setText("Equipo 1");
+
+        javax.swing.GroupLayout containerLayout = new javax.swing.GroupLayout(container);
+        container.setLayout(containerLayout);
+        containerLayout.setHorizontalGroup(
+            containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(containerLayout.createSequentialGroup()
+                .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(containerLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(containerLayout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(agregar_ronda1)
+                                    .addComponent(nombre_equipo1))
+                                .addGap(86, 86, 86)
+                                .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(agregar_ronda2)
+                                    .addComponent(nombre_equipo2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(32, 32, 32))))
+                    .addGroup(containerLayout.createSequentialGroup()
                         .addGap(155, 155, 155)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(84, 84, 84)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nombre_equipo1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(agregar_ronda1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nombre_equipo2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(agregar_ronda2))
-                .addGap(68, 68, 68))
+                        .addComponent(maximo)))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        containerLayout.setVerticalGroup(
+            containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(containerLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel6))
+                    .addComponent(maximo))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nombre_equipo1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nombre_equipo2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nombre_equipo2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nombre_equipo1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(agregar_ronda1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(agregar_ronda2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(agregar_ronda1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(container, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(container, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 1, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void agregar_ronda1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregar_ronda1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_agregar_ronda1ActionPerformed
+    private void agregar_ronda(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregar_ronda
+        if (!finJuego) {
 
-    private void agregar_ronda2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregar_ronda2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_agregar_ronda2ActionPerformed
+            String puntos = JOptionPane.showInputDialog(
+                    this,
+                    "Puntos",
+                    "Crear ronda",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+            //try{
+            Integer.parseInt(puntos);
+            int index = buttons.indexOf((JButton) evt.getSource());
+            System.out.println(index);
+            if (index != -1) {
+                Equipos e = buscarEquipo(index);
+                System.out.println(e.getNombre());
+                oper.agregarRonda(this.partida, e, Integer.parseInt(puntos), num_ronda);
+                DefaultTableModel model = (DefaultTableModel) tablero.getModel();
+                String row[] = new String[]{Integer.toString(num_ronda), "", "", "", ""};
+                row[index + 1] = puntos;
 
+                model.addRow(anexarPuntosTotales(row, e.getId()));
+                num_ronda++;
+            }
+            //}catch(Exception e){
+            //    JOptionPane.showMessageDialog(null, "Los puntos no son un número válido");    
+            //}
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_agregar_ronda
+    private String[] anexarPuntosTotales(String[] array, BigDecimal equipo_id) {
+        List<Object[]> result = oper.totalEnPartida(partida.getId(), equipo_id);
+        int i = 0;
+        for (Equipos e : partida.getEquiposes()) {
+            boolean band = false;
+            for (Object[] row : result) {
+                System.out.println(row[0] + " " + row[1]);
+                System.out.println(e.getId());
+                if (e.getId().toString().equals(row[0].toString())) {
+                    band = true;
+                    if ((Integer.parseInt(row[1].toString())) > Integer.parseInt(partida.getMaximopunto().toString())) {
+                        JOptionPane.showMessageDialog(null, "Ha ganado el jugador/equipo: " + e.getNombre());
+                        finJuego = true;
+                    }
+                    array[i + 1] += "/" + row[1];
+                }
+            }
+            i++;
+        }
+        return array;
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregar_ronda1;
     private javax.swing.JButton agregar_ronda2;
+    private javax.swing.JPanel container;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel maximo;
     private javax.swing.JLabel nombre_equipo1;
     private javax.swing.JLabel nombre_equipo2;
+    private javax.swing.JTable tablero;
     // End of variables declaration//GEN-END:variables
 }

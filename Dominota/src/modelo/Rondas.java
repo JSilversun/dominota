@@ -19,8 +19,7 @@ public class Rondas  implements java.io.Serializable {
     public Rondas() {
     }
 
-    public Rondas(BigDecimal id, Partidas partidas, Equipos equipos, BigDecimal numeroronda, BigDecimal puntos) {
-       this.id = id;
+    public Rondas(Partidas partidas, Equipos equipos, BigDecimal numeroronda, BigDecimal puntos) {
        this.partidas = partidas;
        this.equipos = equipos;
        this.numeroronda = numeroronda;

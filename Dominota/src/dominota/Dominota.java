@@ -21,6 +21,7 @@ public class Dominota {
         System. out. println("Hola mundo");
         //Operaciones operacion= new Operaciones();
         //operacion.AgregarUsuario();
+        
         new vista.NuevoJuagador().setVisible(true);
     }
     

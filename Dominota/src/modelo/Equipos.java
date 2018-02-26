@@ -20,6 +20,14 @@ public class Equipos  implements java.io.Serializable {
      private Set<Rondas> rondases = new HashSet<Rondas>(0);
      private Set<Partidas> partidases = new HashSet<Partidas>(0);
 
+    public Set<Rondas> getRondases() {
+        return rondases;
+    }
+
+    public void setRondases(Set<Rondas> rondases) {
+        this.rondases = rondases;
+    }
+
 
     public Equipos() {
     }
@@ -92,7 +100,6 @@ public class Equipos  implements java.io.Serializable {
     public void setPartidases(Set<Partidas> partidases) {
         this.partidases = partidases;
     }
-
 
 
 }

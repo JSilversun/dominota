@@ -7,7 +7,7 @@
     <property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:XE</property>
     <property name="hibernate.connection.username">UsuarioDominota</property>
     <property name="hibernate.connection.password">Dominota</property>
-    <mapping resource="modelo/PartidosEquipos.hbm.xml"/>
+    <property name="show_sql">true</property>
     <mapping resource="modelo/Equipos.hbm.xml"/>
     <mapping resource="modelo/Partidas.hbm.xml"/>
     <mapping resource="modelo/Jugadores.hbm.xml"/>
