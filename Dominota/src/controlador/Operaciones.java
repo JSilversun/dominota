@@ -218,46 +218,78 @@ public class Operaciones {
         }
         return null;
     }
-    
+
     public List<Object[]> PartidasEnCero(){
-    List<Object[]> lista = null;
-    try {
-        SessionFactory sesion = NewHibernateUtil.getSessionFactory();
-        Session session;
-        session=sesion.openSession();
-        session.beginTransaction();
-        System.out.println("Partidas en 0");
-        String hql = "select j.nombre,  "
-                + "(select count(*) "
-                + "FROM PartidosEquipos as pe "
-                + "where "
-                + "(pe.equipos.jugadoresByJugadoresId.nombre=j.nombre) "
-                + " and (select sum(puntos) from Rondas "
-                + "where (equipos.nombre=pe.equipos.nombre and partidas.id=pe.partidas.id)) is null) "
-                + "+ "
-                + "(select count(*) "
-                + "FROM PartidosEquipos as pe "
-                + "where "
-                + "(pe.equipos.jugadoresByJugadoresId1.nombre=j.nombre) "
-                + " and (select sum(puntos) from Rondas "
-                + "where (equipos.nombre=pe.equipos.nombre and partidas.id=pe.partidas.id)) is null) "
-                + "from "
-                + "Jugadores as j" ;
-        
-        Query query = session.createQuery(hql);
-        System.out.println("Aqiiiii");
-        lista = query.list();
-        System.out.println(lista);
+        List<Object[]> lista = null;
+        try {
+            SessionFactory sesion = NewHibernateUtil.getSessionFactory();
+            Session session;
+            session=sesion.openSession();
+            session.beginTransaction();
+            System.out.println("Partidas en 0");
+            String hql = "select j.nombre,  "
+                    + "(select count(*) "
+                    + "FROM PartidosEquipos as pe "
+                    + "where "
+                    + "(pe.equipos.jugadoresByJugadoresId.nombre=j.nombre) "
+                    + " and (select sum(puntos) from Rondas "
+                    + "where (equipos.nombre=pe.equipos.nombre and partidas.id=pe.partidas.id)) is null) "
+                    + "+ "
+                    + "(select count(*) "
+                    + "FROM PartidosEquipos as pe "
+                    + "where "
+                    + "(pe.equipos.jugadoresByJugadoresId1.nombre=j.nombre) "
+                    + " and (select sum(puntos) from Rondas "
+                    + "where (equipos.nombre=pe.equipos.nombre and partidas.id=pe.partidas.id)) is null) "
+                    + "from "
+                    + "Jugadores as j" ;
+            
+            Query query = session.createQuery(hql);
+            System.out.println("Aqiiiii");
+            lista = query.list();
+            System.out.println(lista);
 
-        for (Object[] datos : lista) {
-         System.out.println(datos[0] + "--" + datos[1]);
+            for (Object[] datos : lista) {
+            System.out.println(datos[0] + "--" + datos[1]);
+            }
+
+            return lista;
         }
+        catch(Exception e) {
 
-        return lista;
+        }
+        return null;
     }
-    catch(Exception e) {
-
-    }
-       return null;
+    
+    public List<Object[]> PartidasJugador(){
+       
+        try {
+            SessionFactory sesion = NewHibernateUtil.getSessionFactory();
+            Session session;
+            session=sesion.openSession();
+            session.beginTransaction();
+            Query partidas_jugador = session.createQuery(
+                "SELECT j.nombre, (SELECT COUNT(*) "+
+                                  "FROM Equipos e, PartidosEquipos pe "+
+                                  "WHERE e.jugadoresByJugadoresId.nombre=j.nombre AND e.jugadoresByJugadoresId1.id IS NULL AND e.id=pe.equipos.id), "+
+                                  "(SELECT COUNT(*) "+
+                                  "FROM Equipos ee, PartidosEquipos pp "+
+                                  "WHERE ((ee.jugadoresByJugadoresId.nombre=j.nombre AND ee.jugadoresByJugadoresId1.id IS NOT NULL) OR ee.jugadoresByJugadoresId1.nombre=j.nombre) AND ee.id=pp.equipos.id) "+
+                "FROM Jugadores j"
+            );
+            List<Object[]> partidas = partidas_jugador.list();
+            for (Object[] aRow : partidas) {
+                //System.out.println(aRow[0] + " " + aRow[1] + " " + aRow[2]);
+                //System.out.println(aRow[0] + " " + aRow[1] + " " + aRow[2] + " " + aRow[3] + " " + aRow[4]);
+                System.out.println(aRow[0] + " " + aRow[1] + " " + aRow[2]);
+            }
+            
+            return partidas;
+        }
+        catch(Exception e) {
+            System.out.println(e);
+        }
+        
+        return null;
     }
 }
