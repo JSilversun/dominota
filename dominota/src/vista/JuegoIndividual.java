@@ -288,6 +288,7 @@ public class JuegoIndividual extends javax.swing.JPanel {
     }//GEN-LAST:event_agregar_ronda
     private String[] anexarPuntosTotales(String[] array, BigDecimal equipo_id){
         List<Object[]> result=oper.totalEnPartida(partida.getId(),equipo_id);
+        System.out.println(result);
         int i=0;
         for(Equipos e:partida.getEquiposes()){
             boolean band=false;
@@ -295,6 +296,7 @@ public class JuegoIndividual extends javax.swing.JPanel {
                 System.out.println(row[0]+" "+row[1]);
                 System.out.println(e.getId());
                 if(e.getId().toString().equals(row[0].toString())){
+                    System.out.println(row[0]);
                     band=true;
                     if((Integer.parseInt(row[1].toString()))>Integer.parseInt(partida.getMaximopunto().toString())){
                         JOptionPane.showMessageDialog(null, "Ha ganado el jugador/equipo: "+e.getNombre());

@@ -169,6 +169,7 @@ public class Operaciones {
             return null;
         }
         
+<<<<<<< HEAD
     } 
     public List<Object[]> totalEnPartida(BigDecimal partida_id, BigDecimal equipo_id){
     //try {
@@ -193,11 +194,18 @@ public class Operaciones {
         //return null;
     }
     public void agregarRonda(Partidas p, Equipos e, int puntos, int nro) {
+=======
+    }
+    
+    public List<Object[]> PartidasGanadas(){
+        List<Object[]> lista = null;
+>>>>>>> 6a4ad424e5e31acba87689ff8c8a88681f95fc93
         try {
             SessionFactory sesion = NewHibernateUtil.getSessionFactory();
             Session session;
             session=sesion.openSession();
             session.beginTransaction();
+<<<<<<< HEAD
             
             Rondas ronda= new Rondas(p,e,new BigDecimal(nro),new BigDecimal(puntos));
             
@@ -208,5 +216,70 @@ public class Operaciones {
         }catch(HibernateException ex) {
             System.out.println("Algo salio mal");
         }
+=======
+            System.out.println("22222");
+            String hql = "select j.nombre, "
+                    + "(select count(*) FROM Partidas where j.nombre=equipos.jugadoresByJugadoresId.nombre)+ "
+                    + "(select count(*) FROM Partidas where j.nombre=equipos.jugadoresByJugadoresId1.nombre) "
+                    + "FROM Jugadores j ";
+            
+            Query query = session.createQuery(hql);
+            System.out.println("Aqiiiii");
+            lista = query.list();
+            System.out.println(lista);
+            
+            for (Object[] datos : lista) {
+             System.out.println(datos[0] + "--" + datos[1]);
+            }
+            
+            return lista;
+        }
+        catch(Exception e) {
+            
+        }
+        return null;
+    }
+    
+    public List<Object[]> PartidasEnCero(){
+    List<Object[]> lista = null;
+    try {
+        SessionFactory sesion = NewHibernateUtil.getSessionFactory();
+        Session session;
+        session=sesion.openSession();
+        session.beginTransaction();
+        System.out.println("Partidas en 0");
+        String hql = "select j.nombre,  "
+                + "(select count(*) "
+                + "FROM PartidosEquipos as pe "
+                + "where "
+                + "(pe.equipos.jugadoresByJugadoresId.nombre=j.nombre) "
+                + " and (select sum(puntos) from Rondas "
+                + "where (equipos.nombre=pe.equipos.nombre and partidas.id=pe.partidas.id)) is null) "
+                + "+ "
+                + "(select count(*) "
+                + "FROM PartidosEquipos as pe "
+                + "where "
+                + "(pe.equipos.jugadoresByJugadoresId1.nombre=j.nombre) "
+                + " and (select sum(puntos) from Rondas "
+                + "where (equipos.nombre=pe.equipos.nombre and partidas.id=pe.partidas.id)) is null) "
+                + "from "
+                + "Jugadores as j" ;
+        
+        Query query = session.createQuery(hql);
+        System.out.println("Aqiiiii");
+        lista = query.list();
+        System.out.println(lista);
+
+        for (Object[] datos : lista) {
+         System.out.println(datos[0] + "--" + datos[1]);
+        }
+
+        return lista;
+    }
+    catch(Exception e) {
+
+    }
+       return null;
+>>>>>>> 6a4ad424e5e31acba87689ff8c8a88681f95fc93
     }
 }

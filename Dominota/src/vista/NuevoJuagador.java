@@ -162,7 +162,7 @@ public class NuevoJuagador extends javax.swing.JFrame {
 
     private void EstadisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EstadisticasActionPerformed
         Estadisticas estadistica= new Estadisticas();
-        estadistica.setSize(500, 400);
+        estadistica.setSize(700, 400);
         estadistica.setLocation(5, 5);
         PanelGeneral.removeAll();
         PanelGeneral.add(estadistica, BorderLayout.CENTER);
