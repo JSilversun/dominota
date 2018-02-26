@@ -169,7 +169,6 @@ public class Operaciones {
             return null;
         }
         
-<<<<<<< HEAD
     } 
     public List<Object[]> totalEnPartida(BigDecimal partida_id, BigDecimal equipo_id){
     //try {
@@ -179,7 +178,7 @@ public class Operaciones {
             session.beginTransaction();
             //"SELECT e.id, SUM(r.puntos),p.id from Rondas r join r.equipos e join r.partidas p where r.partidas.id=? group by r.equipos.id, r.partidas.id"
             Query query = session.createQuery(
-                    "SELECT e.id, SUM(r.puntos),p.id from Rondas r join r.equipos e join r.partidas p where r.partidas.id=? and r.equipos.id=? group by r.equipos.id, r.partidas.id");
+                    "SELECT e.id, SUM(r.puntos)from Rondas r join r.equipos e join r.partidas p where r.partidas.id=? and r.equipos.id=? group by e.id, p.id");
             query.setBigDecimal(0,partida_id);
             query.setBigDecimal(1,equipo_id);
             List<Object[]>result=query.list();
@@ -194,18 +193,11 @@ public class Operaciones {
         //return null;
     }
     public void agregarRonda(Partidas p, Equipos e, int puntos, int nro) {
-=======
-    }
-    
-    public List<Object[]> PartidasGanadas(){
-        List<Object[]> lista = null;
->>>>>>> 6a4ad424e5e31acba87689ff8c8a88681f95fc93
         try {
             SessionFactory sesion = NewHibernateUtil.getSessionFactory();
             Session session;
             session=sesion.openSession();
             session.beginTransaction();
-<<<<<<< HEAD
             
             Rondas ronda= new Rondas(p,e,new BigDecimal(nro),new BigDecimal(puntos));
             
@@ -216,7 +208,15 @@ public class Operaciones {
         }catch(HibernateException ex) {
             System.out.println("Algo salio mal");
         }
-=======
+    }
+    
+    public List<Object[]> PartidasGanadas(){
+        List<Object[]> lista = null;
+        try {
+            SessionFactory sesion = NewHibernateUtil.getSessionFactory();
+            Session session;
+            session=sesion.openSession();
+            session.beginTransaction();
             System.out.println("22222");
             String hql = "select j.nombre, "
                     + "(select count(*) FROM Partidas where j.nombre=equipos.jugadoresByJugadoresId.nombre)+ "
@@ -242,7 +242,7 @@ public class Operaciones {
     
     public List<Object[]> PartidasEnCero(){
     List<Object[]> lista = null;
-    try {
+    //try {
         SessionFactory sesion = NewHibernateUtil.getSessionFactory();
         Session session;
         session=sesion.openSession();
@@ -264,9 +264,9 @@ public class Operaciones {
                 + "where (equipos.nombre=pe.equipos.nombre and partidas.id=pe.partidas.id)) is null) "
                 + "from "
                 + "Jugadores as j" ;
+        String sql="select j.nombre, sum(case when r.equipos=e.id then r.puntos else 0 end) as total from Partidas p join p.equiposes e left join p.rondases r, Jugadores j WHERE (e.jugadoresByJugadoresId=j.id or e.jugadoresByJugadoresId1=j.id) group by j.nombre,r.partidas.id having sum(case when r.equipos=e.id then r.puntos else 0 end)=0";
+        Query query = session.createQuery(sql); 
         
-        Query query = session.createQuery(hql);
-        System.out.println("Aqiiiii");
         lista = query.list();
         System.out.println(lista);
 
@@ -275,11 +275,10 @@ public class Operaciones {
         }
 
         return lista;
-    }
-    catch(Exception e) {
+    //}
+    /*catch(Exception e) {
 
-    }
-       return null;
->>>>>>> 6a4ad424e5e31acba87689ff8c8a88681f95fc93
+    }*/
+       //return null;
     }
 }
