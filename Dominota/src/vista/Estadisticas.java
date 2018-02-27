@@ -62,6 +62,11 @@ public class Estadisticas extends javax.swing.JPanel {
         jButton3.setText("Más Puntos en una Ronda");
 
         jButton4.setText("Porcentaje de victorias en RONDAS por cada jugador");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Consulta Creativa");
 
@@ -134,6 +139,16 @@ public class Estadisticas extends javax.swing.JPanel {
         jPanel1.repaint();
         this.oper.PartidasEnCero();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        VictoriasJugador victorias = new VictoriasJugador();
+        victorias.setSize(450, 400);
+        victorias.setLocation(2, 5);
+        jPanel1.removeAll();
+        jPanel1.add(victorias, BorderLayout.CENTER);
+        jPanel1.revalidate();
+        jPanel1.repaint();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
