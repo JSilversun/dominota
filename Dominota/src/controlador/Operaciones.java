@@ -235,8 +235,8 @@ public class Operaciones {
             session.beginTransaction();
             System.out.println("22222");
             String hql = "select j.nombre, "
-                    + "(select count(*) FROM Partidas where j.nombre=equipos.jugadoresByJugadoresId.nombre)+ "
-                    + "(select count(*) FROM Partidas where j.nombre=equipos.jugadoresByJugadoresId1.nombre) "
+                    + "(select count(*) FROM Partidas where j.nombre=equipos.jugadoresByJugadoresId.nombre "
+                    + "or  COALESCE(equipos.jugadoresByJugadoresId1.id,-1)=j.id) "
                     + "FROM Jugadores j ";
             
             Query query = session.createQuery(hql);
