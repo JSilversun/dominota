@@ -6,6 +6,7 @@
 package controlador;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -19,6 +20,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import modelo.*;
 import org.hibernate.HibernateException;
+import java.lang.String;
+import java.math.BigDecimal;
 
 public class Operaciones {
     public void AgregarUsuario(Jugadores jugador){
@@ -186,12 +189,11 @@ public class Operaciones {
         
     } 
     public List<Object[]> totalEnPartida(BigDecimal partida_id, BigDecimal equipo_id){
-    //try {
+    try {
             SessionFactory sesion = NewHibernateUtil.getSessionFactory();
             Session session;
             session=sesion.openSession();
             session.beginTransaction();
-            //"SELECT e.id, SUM(r.puntos),p.id from Rondas r join r.equipos e join r.partidas p where r.partidas.id=? group by r.equipos.id, r.partidas.id"
             Query query = session.createQuery(
                     "SELECT e.id, SUM(r.puntos)from Rondas r join r.equipos e join r.partidas p where r.partidas.id=? and r.equipos.id=? group by e.id, p.id");
             query.setBigDecimal(0,partida_id);
@@ -199,13 +201,12 @@ public class Operaciones {
             List<Object[]>result=query.list();
             session.close();
             return result;
-            
-            
-        //}
-        //catch(Exception e) {
-        //    System.out.println("Algo salio mal");
-        //}
-        //return null;
+             
+        }
+        catch(Exception e) {
+           System.out.println("Algo salio mal");
+        }
+        return null;
     }
     public void agregarRonda(Partidas p, Equipos e, int puntos, int nro) {
         try {
@@ -276,7 +277,7 @@ public class Operaciones {
         Query query = session.createQuery(hql); 
         
         lista = query.list();
-        //System.out.println(lista);
+      
 
         for (Object[] datos : lista) {
             System.out.println(datos[0] + "--" + datos[1]);
@@ -303,13 +304,12 @@ public class Operaciones {
                                   "WHERE e.jugadoresByJugadoresId.nombre=j.nombre AND e.jugadoresByJugadoresId1.id IS NULL AND e.id=pe.equipos.id), "+
                                   "(SELECT COUNT(*) "+
                                   "FROM Equipos ee, PartidosEquipos pp "+
-                                  "WHERE ((ee.jugadoresByJugadoresId.nombre=j.nombre AND ee.jugadoresByJugadoresId1.id IS NOT NULL) OR ee.jugadoresByJugadoresId1.nombre=j.nombre) AND ee.id=pp.equipos.id) "+
+                                  "WHERE ((ee.jugadoresByJugadoresId.nombre=j.nombre AND ee.jugadoresByJugadoresId1.id IS NOT NULL) OR COALESCE(ee.jugadoresByJugadoresId1.nombre,'null')=j.nombre) AND ee.id=pp.equipos.id) "+
                 "FROM Jugadores j"
             );
             List<Object[]> partidas = partidas_jugador.list();
             for (Object[] aRow : partidas) {
-                //System.out.println(aRow[0] + " " + aRow[1] + " " + aRow[2]);
-                //System.out.println(aRow[0] + " " + aRow[1] + " " + aRow[2] + " " + aRow[3] + " " + aRow[4]);
+               
                 System.out.println(aRow[0] + " " + aRow[1] + " " + aRow[2]);
             }
             
@@ -322,7 +322,7 @@ public class Operaciones {
         return null;
     }
     
-    public ArrayList<Equipos> PuntosRonda(){
+  public ArrayList<Equipos> PuntosRonda(){
         ArrayList<Equipos> lista = null;
         try {
             SessionFactory sesion = NewHibernateUtil.getSessionFactory();
@@ -396,4 +396,121 @@ public class Operaciones {
         }
         
     }
+    
+    public List<Object[]> VictoriasJugador(){
+        try {
+
+            SessionFactory sesion = NewHibernateUtil.getSessionFactory();
+            Session session;
+            session=sesion.openSession();
+            session.beginTransaction();
+         
+            Query jugadores = session.createQuery(
+                "SELECT DISTINCT j.nombre, j.id "+
+                "FROM Equipos ee "+
+                "INNER JOIN ee.jugadoresByJugadoresId j "+
+                "ORDER BY j.nombre"
+            );
+            
+            Query cant_victorias = session.createQuery(
+                "SELECT DISTINCT j.nombre, pp.id, (SELECT COUNT(r.numeroronda) "+
+                                        "FROM Equipos e, Rondas r "+
+                                        "WHERE e.id=r.equipos.id AND "+
+                                        "(e.jugadoresByJugadoresId.nombre=j.nombre OR e.jugadoresByJugadoresId1.nombre=j.nombre))+ "+
+                                        "(SELECT COUNT(r.numeroronda) "+
+                                        "FROM Equipos e, Rondas r "+
+                                        "WHERE e.id=r.equipos.id AND "+
+                                        "(e.jugadoresByJugadoresId.nombre=j.nombre AND e.jugadoresByJugadoresId1.id IS NULL)) "+
+                "FROM Equipos ee "+
+                "INNER JOIN ee.jugadoresByJugadoresId j "+
+                "INNER JOIN ee.rondases r "+
+                "INNER JOIN r.partidas pp "+
+                "ORDER BY j.nombre"
+            );
+          
+            Query rondas = session.createQuery(
+                "SELECT p.id, COUNT(p.id) "+
+                "FROM Equipos e "+
+                "INNER JOIN e.rondases r "+
+                "INNER JOIN r.partidas p "+
+                "GROUP BY p.id "
+            );
+            
+            List<Object[]> partidas = cant_victorias.list();
+            List<Object[]> ron = rondas.list();
+            List<Object[]> jug = jugadores.list();
+            List<String[]> resultado;
+           
+            for (Object[] aRow : partidas) {
+                System.out.println(aRow[0] + " " + aRow[1] + " " + aRow[2]);
+            }
+            System.out.println("");
+           
+            for (Object[] aRow : ron) {
+                System.out.println(aRow[0] + " " + aRow[1]);
+            }
+            System.out.println("");
+            for (Object[] aRow : jug) {
+                System.out.println(aRow[0]);
+            }
+            System.out.println("");
+            float porc = 0;
+            int acum = 0;
+            int partida = 0;
+            int victorias = 0;
+            List<Object[]> jgr = new ArrayList<Object[]>();
+            int i = 0;
+            BigDecimal result = new BigDecimal(0);
+           
+            for (Object[] j : jug) {
+                acum=0;
+                result = new BigDecimal(0);
+                System.out.println("---------------------------");
+                System.out.println(j[0]);
+                for (Object[] vic : partidas) {
+                    if(j[0].equals(vic[0])){
+                        System.out.println(j[0] +" "+vic[0]);
+                        for (Object[] part : ron) {
+                            if(part[0].equals(vic[1])){
+                                System.out.println(part[0] + " " + vic[1]);
+                                //partida = Integer.parseInt(String.valueOf(part[1]));
+                                partida = Integer.valueOf(Integer.parseInt(String.valueOf(part[1]), 10));
+                                System.out.println("Total: " +partida);
+                                acum = acum + partida;
+                            }
+                        }
+                        //victorias = Integer.parseInt(String.valueOf(vic[2]));
+                        victorias = Integer.valueOf(Integer.parseInt(String.valueOf(vic[2]), 10));
+                        System.out.println("Victorias: "+victorias);
+                    }
+                }
+                if(acum!=0){
+                    porc = (victorias/(float)acum)*100;
+                    result=round(porc,2);
+                }
+                System.out.println(j[0] + " " +result);
+                jgr.add(new Object[] {j[0],result});
+                i++;
+            }
+            
+            System.out.println("POR FAVOOOOOOOOOOOOOOOOOR");
+            for (Object[] aRow : jgr) {
+                System.out.println(aRow[0] + " " + aRow[1]);
+            }
+            return jgr;
+            
+        }
+        catch(Exception e) {
+            System.out.println(e);
+        }
+        
+        return null;
+    }
+    
+    public static BigDecimal round(float d, int decimalPlace) {
+        BigDecimal bd = new BigDecimal(Float.toString(d));
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);       
+        return bd;
+    }
 }
+

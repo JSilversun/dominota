@@ -23,6 +23,7 @@ public class Dominota {
         //operacion.AgregarUsuario();
         
         new vista.NuevoJuagador().setVisible(true);
+        
     }
     
 }
