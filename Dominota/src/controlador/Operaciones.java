@@ -405,10 +405,16 @@ public class Operaciones {
             session=sesion.openSession();
             session.beginTransaction();
          
-            Query jugadores = session.createQuery(
+            /*Query jugadores = session.createQuery(
                 "SELECT DISTINCT j.nombre, j.id "+
                 "FROM Equipos ee "+
                 "INNER JOIN ee.jugadoresByJugadoresId j "+
+                "ORDER BY j.nombre"
+            );*/
+            
+            Query jugadores = session.createQuery(
+                "SELECT DISTINCT j.nombre, j.id "+
+                "FROM Jugadores j "+
                 "ORDER BY j.nombre"
             );
             
@@ -427,6 +433,22 @@ public class Operaciones {
                 "INNER JOIN r.partidas pp "+
                 "ORDER BY j.nombre"
             );
+            
+            Query cant_victorias2 = session.createQuery(
+                "SELECT DISTINCT j.nombre, pp.id, (SELECT COUNT(r.numeroronda) "+
+                                        "FROM Equipos e, Rondas r "+
+                                        "WHERE e.id=r.equipos.id AND "+
+                                        "(e.jugadoresByJugadoresId.nombre=j.nombre OR e.jugadoresByJugadoresId1.nombre=j.nombre))+ "+
+                                        "(SELECT COUNT(r.numeroronda) "+
+                                        "FROM Equipos e, Rondas r "+
+                                        "WHERE e.id=r.equipos.id AND "+
+                                        "(e.jugadoresByJugadoresId.nombre=j.nombre AND e.jugadoresByJugadoresId1.id IS NULL)) "+
+                "FROM Equipos ee "+
+                "INNER JOIN ee.jugadoresByJugadoresId1 j "+
+                "INNER JOIN ee.rondases r "+
+                "INNER JOIN r.partidas pp "+
+                "ORDER BY j.nombre"
+            );            
           
             Query rondas = session.createQuery(
                 "SELECT p.id, COUNT(p.id) "+
@@ -437,11 +459,16 @@ public class Operaciones {
             );
             
             List<Object[]> partidas = cant_victorias.list();
+            List<Object[]> partidas2 = cant_victorias2.list();
             List<Object[]> ron = rondas.list();
             List<Object[]> jug = jugadores.list();
             List<String[]> resultado;
            
             for (Object[] aRow : partidas) {
+                System.out.println(aRow[0] + " " + aRow[1] + " " + aRow[2]);
+            }
+            System.out.println("/////////////////////");
+            for (Object[] aRow : partidas2) {
                 System.out.println(aRow[0] + " " + aRow[1] + " " + aRow[2]);
             }
             System.out.println("");
@@ -459,7 +486,6 @@ public class Operaciones {
             int partida = 0;
             int victorias = 0;
             List<Object[]> jgr = new ArrayList<Object[]>();
-            int i = 0;
             BigDecimal result = new BigDecimal(0);
            
             for (Object[] j : jug) {
@@ -484,16 +510,61 @@ public class Operaciones {
                         System.out.println("Victorias: "+victorias);
                     }
                 }
+                for (Object[] vic2 : partidas2) {
+                    if(j[0].equals(vic2[0])){
+                        //System.out.println(j[0] +" "+vic2[0]);
+                        for (Object[] part2 : ron) {
+                            if(part2[0].equals(vic2[1])){
+                                System.out.println(part2[0] + " " + vic2[1]);
+                                //partida = Integer.parseInt(String.valueOf(part[1]));
+                                partida = Integer.valueOf(Integer.parseInt(String.valueOf(part2[1]), 10));
+                                System.out.println("Total: " +partida);
+                                acum = acum + partida;
+                            }
+                        }
+                        //victorias = Integer.parseInt(String.valueOf(vic[2]));
+                        victorias = Integer.valueOf(Integer.parseInt(String.valueOf(vic2[2]), 10));
+                        System.out.println("Victorias: "+victorias);
+                    }
+                }
                 if(acum!=0){
                     porc = (victorias/(float)acum)*100;
                     result=round(porc,2);
+                    jgr.add(new Object[] {j[0],result});
+                    System.out.println(j[0] + " " +result);
                 }
-                System.out.println(j[0] + " " +result);
-                jgr.add(new Object[] {j[0],result});
-                i++;
+                
             }
-            
-            System.out.println("POR FAVOOOOOOOOOOOOOOOOOR");
+            /*for (Object[] j : jug) {
+                acum=0;
+                result = new BigDecimal(0);
+                System.out.println("---------------------------");
+                System.out.println(j[0]);
+                for (Object[] vic : partidas2) {
+                    if(j[0].equals(vic[0])){
+                        System.out.println(j[0] +" "+vic[0]);
+                        for (Object[] part : ron) {
+                            if(part[0].equals(vic[1])){
+                                System.out.println(part[0] + " " + vic[1]);
+                                //partida = Integer.parseInt(String.valueOf(part[1]));
+                                partida = Integer.valueOf(Integer.parseInt(String.valueOf(part[1]), 10));
+                                System.out.println("Total: " +partida);
+                                acum = acum + partida;
+                            }
+                        }
+                        //victorias = Integer.parseInt(String.valueOf(vic[2]));
+                        victorias = Integer.valueOf(Integer.parseInt(String.valueOf(vic[2]), 10));
+                        System.out.println("Victorias: "+victorias);
+                    }
+                }
+                if(acum!=0){
+                    porc = (victorias/(float)acum)*100;
+                    result=round(porc,2);
+                    jgr.add(new Object[] {j[0],result});
+                    System.out.println(j[0] + " " +result);
+                }                
+            }*/
+            System.out.println("LISTAAAAAAAAAAAAAA");
             for (Object[] aRow : jgr) {
                 System.out.println(aRow[0] + " " + aRow[1]);
             }
