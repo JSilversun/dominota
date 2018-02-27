@@ -292,4 +292,37 @@ public class Operaciones {
         
         return null;
     }
+    
+    public List<Object[]> PuntosRonda(){
+        List<Object[]> lista = null;
+        try {
+            SessionFactory sesion = NewHibernateUtil.getSessionFactory();
+            Session session;
+            session=sesion.openSession();
+            session.beginTransaction();
+            System.out.println("Puntos Ronda");
+            String hql = "select r.equipos.jugadoresByJugadoresId.nombre, "
+                    + "CASE WHEN EXISTS "
+                    + "(select nombre from Jugadores where id=COALESCE(r.equipos.jugadoresByJugadoresId1.id,-1)) "
+                    + "THEN r.equipos.jugadoresByJugadoresId1.nombre ELSE 'no existe' END as jugador2, "
+                    + "r.equipos.nombre "
+                    + "from Rondas r "
+                    + "where r.puntos in (select max(puntos) from Rondas) ";
+            
+            Query query = session.createQuery(hql);
+            System.out.println("Aqiiiii");
+            lista = query.list();
+            System.out.println(lista);
+            
+            for (Object[] datos : lista) {
+             System.out.println(datos[0] + "--" + datos[1]+ "--" + datos[2]);
+            }
+            
+            return lista;
+        }
+        catch(Exception e) {
+            
+        }
+        return null;
+    }
 }
