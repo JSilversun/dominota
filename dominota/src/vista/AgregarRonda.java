@@ -45,7 +45,7 @@ public class AgregarRonda extends javax.swing.JPanel {
             }
         });
 
-        button1.setBackground(new java.awt.Color(51, 0, 255));
+        button1.setBackground(new java.awt.Color(0, 153, 255));
         button1.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
         button1.setForeground(new java.awt.Color(255, 255, 255));
         button1.setLabel("Guardar");

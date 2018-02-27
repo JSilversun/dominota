@@ -111,6 +111,8 @@ public class JuegoIndividual extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTable1);
 
         container.setBackground(new java.awt.Color(255, 255, 255));
+        container.setForeground(new java.awt.Color(51, 255, 51));
+        container.setPreferredSize(new java.awt.Dimension(422, 800));
 
         nombre_jugador1.setText("Jugador1");
 
@@ -165,6 +167,7 @@ public class JuegoIndividual extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
         ));
+        tablero.setPreferredSize(new java.awt.Dimension(375, 150));
         tablero.setTableHeader(null);
         jScrollPane2.setViewportView(tablero);
 
@@ -229,8 +232,8 @@ public class JuegoIndividual extends javax.swing.JPanel {
                     .addComponent(agregar_ronda3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(115, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -241,7 +244,7 @@ public class JuegoIndividual extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(container, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(container, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
 

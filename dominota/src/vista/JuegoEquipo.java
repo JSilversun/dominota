@@ -171,8 +171,8 @@ public class JuegoEquipo extends javax.swing.JPanel {
                     .addComponent(agregar_ronda2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(171, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -185,7 +185,7 @@ public class JuegoEquipo extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(container, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -193,29 +193,29 @@ public class JuegoEquipo extends javax.swing.JPanel {
         if (!finJuego) {
 
             String puntos = JOptionPane.showInputDialog(
-                    this,
-                    "Puntos",
-                    "Crear ronda",
-                    JOptionPane.INFORMATION_MESSAGE
+                this,
+                "Puntos",
+                "Crear ronda",
+                JOptionPane.INFORMATION_MESSAGE
             );
             //try{
-            Integer.parseInt(puntos);
-            int index = buttons.indexOf((JButton) evt.getSource());
-            System.out.println(index);
-            if (index != -1) {
-                Equipos e = buscarEquipo(index);
-                System.out.println(e.getNombre());
-                oper.agregarRonda(this.partida, e, Integer.parseInt(puntos), num_ronda);
-                DefaultTableModel model = (DefaultTableModel) tablero.getModel();
-                String row[] = new String[]{Integer.toString(num_ronda), "", "", "", ""};
-                row[index + 1] = puntos;
+                Integer.parseInt(puntos);
+                int index = buttons.indexOf((JButton) evt.getSource());
+                System.out.println(index);
+                if (index != -1) {
+                    Equipos e = buscarEquipo(index);
+                    System.out.println(e.getNombre());
+                    oper.agregarRonda(this.partida, e, Integer.parseInt(puntos), num_ronda);
+                    DefaultTableModel model = (DefaultTableModel) tablero.getModel();
+                    String row[] = new String[]{Integer.toString(num_ronda), "", "", "", ""};
+                    row[index + 1] = puntos;
 
-                model.addRow(anexarPuntosTotales(row, e.getId()));
-                num_ronda++;
-            }
-            //}catch(Exception e){
-            //    JOptionPane.showMessageDialog(null, "Los puntos no son un número válido");    
-            //}
+                    model.addRow(anexarPuntosTotales(row, e.getId()));
+                    num_ronda++;
+                }
+                //}catch(Exception e){
+                //    JOptionPane.showMessageDialog(null, "Los puntos no son un número válido");
+                //}
         }        // TODO add your handling code here:
     }//GEN-LAST:event_agregar_ronda
     private String[] anexarPuntosTotales(String[] array, BigDecimal equipo_id) {
