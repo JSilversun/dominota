@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import org.hibernate.Query;
@@ -17,6 +18,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import modelo.*;
+import org.hibernate.HibernateException;
 
 public class Operaciones {
     public void AgregarUsuario(Jugadores jugador){
@@ -72,47 +74,41 @@ public class Operaciones {
         }
         return jugadores;
     }
-    public void crearPartidaEquipos(Equipos equipo1, Equipos equipo2, int puntos){
+    public void actualizarGanador(Partidas partida, Equipos e){
         try {
             SessionFactory sesion = NewHibernateUtil.getSessionFactory();
             Session session;
             session=sesion.openSession();
             session.beginTransaction();
-            Partidas partida = new Partidas(new Date(),new BigDecimal(puntos));
-            PartidosEquipos Partidoequipos1 = new PartidosEquipos(partida, equipo1);
-            PartidosEquipos Partidoequipos2 = new PartidosEquipos(partida, equipo2);
-            
+            partida.setEquipos(e);
             session.save(partida);
-            session.save(Partidoequipos1);
-            session.save(Partidoequipos2);
             session.getTransaction().commit();
             session.close();
-            JOptionPane.showMessageDialog(null, "Partida creada con exito!");
+            //JOptionPane.showMessageDialog(null, "Partida creada con exito!");
         }
-        catch(Exception e) {
+        catch(Exception ex) {
             System.out.println("error");
         }
     }
-    
-    public void crearPartidaIndividuales(ArrayList<Equipos> equipos, int puntos){
+    public Partidas crearPartida(Set<Equipos> equiposes, int puntos){
         try {
             SessionFactory sesion = NewHibernateUtil.getSessionFactory();
             Session session;
             session=sesion.openSession();
             session.beginTransaction();
             Partidas partida = new Partidas(new Date(),new BigDecimal(puntos));
+            
+            partida.setEquiposes(equiposes);
             session.save(partida);
-            for (int i = 0; i < equipos.size(); i++) {
-                PartidosEquipos Partidoequipos1 = new PartidosEquipos(partida, equipos.get(i));
-                session.save(Partidoequipos1);
-            }     
             session.getTransaction().commit();
             session.close();
-            JOptionPane.showMessageDialog(null, "Partida creada con exito!");
+            return partida;
+            //JOptionPane.showMessageDialog(null, "Partida creada con exito!");
         }
         catch(Exception e) {
             System.out.println("error");
         }
+        return null;
     }
     
     public Jugadores InformacionJugador(String nombre){
@@ -180,6 +176,7 @@ public class Operaciones {
             Query query = session.createQuery("from Equipos where nombre =?");
             query.setString(0,nombre);
             Equipos equipo= (Equipos) query.uniqueResult();
+            session.close();
             return equipo;
         }
         catch(Exception e) {
@@ -187,6 +184,45 @@ public class Operaciones {
             return null;
         }
         
+    } 
+    public List<Object[]> totalEnPartida(BigDecimal partida_id, BigDecimal equipo_id){
+    //try {
+            SessionFactory sesion = NewHibernateUtil.getSessionFactory();
+            Session session;
+            session=sesion.openSession();
+            session.beginTransaction();
+            //"SELECT e.id, SUM(r.puntos),p.id from Rondas r join r.equipos e join r.partidas p where r.partidas.id=? group by r.equipos.id, r.partidas.id"
+            Query query = session.createQuery(
+                    "SELECT e.id, SUM(r.puntos)from Rondas r join r.equipos e join r.partidas p where r.partidas.id=? and r.equipos.id=? group by e.id, p.id");
+            query.setBigDecimal(0,partida_id);
+            query.setBigDecimal(1,equipo_id);
+            List<Object[]>result=query.list();
+            session.close();
+            return result;
+            
+            
+        //}
+        //catch(Exception e) {
+        //    System.out.println("Algo salio mal");
+        //}
+        //return null;
+    }
+    public void agregarRonda(Partidas p, Equipos e, int puntos, int nro) {
+        try {
+            SessionFactory sesion = NewHibernateUtil.getSessionFactory();
+            Session session;
+            session=sesion.openSession();
+            session.beginTransaction();
+            
+            Rondas ronda= new Rondas(p,e,new BigDecimal(nro),new BigDecimal(puntos));
+            
+            session.save(ronda);
+            
+            session.getTransaction().commit();
+            session.close();
+        }catch(HibernateException ex) {
+            System.out.println("Algo salio mal");
+        }
     }
     
     public List<Object[]> PartidasGanadas(){
@@ -220,34 +256,34 @@ public class Operaciones {
     }
 
     public List<Object[]> PartidasEnCero(){
-        List<Object[]> lista = null;
-        try {
-            SessionFactory sesion = NewHibernateUtil.getSessionFactory();
-            Session session;
-            session=sesion.openSession();
-            session.beginTransaction();
-            System.out.println("Partidas en 0");
-            String hql = "select j.nombre,  "
-                    + "(select count(*) "
-                    + "FROM PartidosEquipos as pe "
-                    + "where "
-                    + "(pe.equipos.jugadoresByJugadoresId.nombre=j.nombre) "
-                    + " and (select sum(puntos) from Rondas "
-                    + "where (equipos.nombre=pe.equipos.nombre and partidas.id=pe.partidas.id)) is null) "
-                    + "+ "
-                    + "(select count(*) "
-                    + "FROM PartidosEquipos as pe "
-                    + "where "
-                    + "(pe.equipos.jugadoresByJugadoresId1.nombre=j.nombre) "
-                    + " and (select sum(puntos) from Rondas "
-                    + "where (equipos.nombre=pe.equipos.nombre and partidas.id=pe.partidas.id)) is null) "
-                    + "from "
-                    + "Jugadores as j" ;
-            
-            Query query = session.createQuery(hql);
-            System.out.println("Aqiiiii");
-            lista = query.list();
-            System.out.println(lista);
+    List<Object[]> lista = null;
+    try {
+        SessionFactory sesion = NewHibernateUtil.getSessionFactory();
+        Session session;
+        session=sesion.openSession();
+        session.beginTransaction();
+        System.out.println("Partidas en 0");
+        String hql = "select j.nombre,  "
+                + "(select count(*) "
+                + "FROM PartidosEquipos as pe "
+                + "where "
+                + "(pe.equipos.jugadoresByJugadoresId.nombre=j.nombre) "
+                + " and (select sum(puntos) from Rondas "
+                + "where (equipos.nombre=pe.equipos.nombre and partidas.id=pe.partidas.id)) is null) "
+                + "+ "
+                + "(select count(*) "
+                + "FROM PartidosEquipos as pe "
+                + "where "
+                + "(pe.equipos.jugadoresByJugadoresId1.nombre=j.nombre) "
+                + " and (select sum(puntos) from Rondas "
+                + "where (equipos.nombre=pe.equipos.nombre and partidas.id=pe.partidas.id)) is null) "
+                + "from "
+                + "Jugadores as j" ;
+        String sql="select j.nombre, sum(case when r.equipos=e.id then r.puntos else 0 end) as total from Partidas p join p.equiposes e left join p.rondases r, Jugadores j WHERE (e.jugadoresByJugadoresId=j.id or e.jugadoresByJugadoresId1=j.id) group by j.nombre,r.partidas.id having sum(case when r.equipos=e.id then r.puntos else 0 end)=0";
+        Query query = session.createQuery(hql); 
+        
+        lista = query.list();
+        System.out.println(lista);
 
             for (Object[] datos : lista) {
             System.out.println(datos[0] + "--" + datos[1]);

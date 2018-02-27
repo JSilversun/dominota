@@ -17,17 +17,20 @@
         <property name="nombre" type="string">
             <column name="NOMBRE" length="20" />
         </property>
-        <set name="partidases" table="PARTIDAS" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="EQUIPOS_ID" precision="22" scale="0" />
-            </key>
-            <one-to-many class="modelo.Partidas" />
-        </set>
+
         <set name="rondases" table="RONDAS" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="EQUIPOS_ID" precision="22" scale="0" not-null="true" />
             </key>
             <one-to-many class="modelo.Rondas" />
+        </set>
+        <set name="partidases" table="PARTIDOS_EQUIPOS" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="EQUIPOS_ID" precision="22" scale="0" not-null="true" />
+            </key>
+            <many-to-many entity-name="modelo.Partidas" >  
+                <column name="PARTIDAS_ID" not-null="true" />
+            </many-to-many>     
         </set>
         <set name="partidosEquiposes" table="PARTIDOS_EQUIPOS" inverse="true" lazy="true" fetch="select">
             <key>

@@ -10,7 +10,9 @@ import controlador.Operaciones;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.swing.DefaultListModel;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.JList;
@@ -19,7 +21,6 @@ import javax.swing.ListSelectionModel;
 import modelo.Equipos;
 import modelo.Jugadores;
 import modelo.Partidas;
-import modelo.PartidosEquipos;
 
 /**
  *
@@ -101,6 +102,7 @@ public class Individual extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setPreferredSize(new java.awt.Dimension(400, 450));
 
         jLabel1.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
         jLabel1.setText("Juego Individual");
@@ -152,7 +154,7 @@ public class Individual extends javax.swing.JPanel {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(82, 82, 82)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(124, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,7 +168,7 @@ public class Individual extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -176,14 +178,14 @@ public class Individual extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(175, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -193,8 +195,9 @@ public class Individual extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         List<String> file = ListaIndividual.getSelectedValuesList();
-        ArrayList<Equipos> equipos = new ArrayList<Equipos>();
+        Set<Equipos> equipos = new HashSet<Equipos>();
         System.out.println(file.get(0));
+        Partidas partida=null;
         if (file.size() < 2 && file.size()>4) {
             JOptionPane.showMessageDialog(null, "El juego debe tener al menos 2 y maximo 4  jugadores");
         } else {
@@ -204,13 +207,21 @@ public class Individual extends javax.swing.JPanel {
                 Equipos equipo1 = oper.ObjetoEquipos(file.get(i));
                 equipos.add(equipo1);
             }
-            
-                oper.crearPartidaIndividuales(equipos,Integer.parseInt(PuntosMaximos.getText()));
+            partida=oper.crearPartida(equipos,Integer.parseInt(PuntosMaximos.getText()));
+            JuegoIndividual juego= new JuegoIndividual(partida);
+            juego.setSize(500, 500);
+            jPanel1.setSize(800,800);
+            juego.setLocation(1, 1);
+            jPanel1.removeAll();
+            jPanel1.add(juego, BorderLayout.CENTER);
+            jPanel1.revalidate();
+            jPanel1.repaint();
             }catch(Exception e){
                 JOptionPane.showMessageDialog(null, "El puntaje máximo no es válido");
             }
 
         }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
