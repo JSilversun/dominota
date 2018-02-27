@@ -69,6 +69,11 @@ public class Estadisticas extends javax.swing.JPanel {
         jButton4.setText("Porcentaje de victorias en RONDAS por cada jugador");
 
         jButton5.setText("Consulta Creativa");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -150,6 +155,16 @@ public class Estadisticas extends javax.swing.JPanel {
         jPanel1.repaint();
         //this.oper.PuntosRonda();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        ConsultaCreativa estadistica= new ConsultaCreativa();
+        estadistica.setSize(700, 400);
+        estadistica.setLocation(5, 5);
+        jPanel1.removeAll();
+        jPanel1.add(estadistica, BorderLayout.CENTER);
+        jPanel1.revalidate();
+        jPanel1.repaint();
+    }//GEN-LAST:event_jButton5ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

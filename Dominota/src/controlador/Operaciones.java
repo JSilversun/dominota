@@ -371,4 +371,26 @@ public class Operaciones {
         }
         return null;
     }
+    
+    public Partidas ConsultaCreativa(){
+        try {
+            SessionFactory sesion = NewHibernateUtil.getSessionFactory();
+            Session session;
+            session=sesion.openSession();
+            session.beginTransaction();
+            System.out.println("Puntos Ronda");
+            String hql = "SELECT p from Partidas p join p.rondases r "
+                    + "where r.numeroronda=(select max(ron.numeroronda) from Rondas ron) ";
+            
+            Query query = session.createQuery(hql);
+            Partidas partida= (Partidas) query.uniqueResult();
+        
+            
+            return partida;
+        }
+        catch(Exception e) {
+            
+        }
+        return null;
+    }
 }
