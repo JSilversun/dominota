@@ -148,7 +148,7 @@ public class Estadisticas extends javax.swing.JPanel {
         jPanel1.add(estadistica, BorderLayout.CENTER);
         jPanel1.revalidate();
         jPanel1.repaint();
-        this.oper.PuntosRonda();
+        //this.oper.PuntosRonda();
     }//GEN-LAST:event_jButton3ActionPerformed
 
 

@@ -5,17 +5,45 @@
  */
 package vista;
 
+import controlador.Operaciones;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import modelo.*;
+
 /**
  *
  * @author loreanaisabel
  */
 public class MasPuntosRonda extends javax.swing.JPanel {
 
-    /**
-     * Creates new form MasPuntosRonda
-     */
+    Operaciones oper;
+    protected ArrayList<Equipos> equipo;
+    protected DefaultListModel DLM;
+    protected List<Object[]> punto;
+    
     public MasPuntosRonda() {
         initComponents();
+        
+        oper = new Operaciones();
+        
+        DLM = new DefaultListModel();
+        equipo = oper.PuntosRonda();
+        punto=oper.MaxPuntosRonda();
+        
+        PuntosRonda.setText("Maximo puntaje en una ronda "+punto.toString());
+        
+        
+        Etiqueta.setText("Se ha encontrado "+equipo.size()+" resultados");
+        for (Equipos equipos : equipo) {
+            if (equipos.getJugadoresByJugadoresId1()!=null) {
+                 DLM.addElement("- Equipo: "+equipos.getNombre()+" -- Jugadores: "+equipos.getJugadoresByJugadoresId().getNombre()+" / "+equipos.getJugadoresByJugadoresId1().getNombre());
+            }else{
+                 DLM.addElement("- Jugador: "+equipos.getJugadoresByJugadoresId().getNombre());
+            }    
+        }
+       
+        Resultados.setModel(DLM);
     }
 
     /**
@@ -28,11 +56,26 @@ public class MasPuntosRonda extends javax.swing.JPanel {
     private void initComponents() {
 
         label1 = new java.awt.Label();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        Resultados = new javax.swing.JList<>();
+        Etiqueta = new javax.swing.JLabel();
+        PuntosRonda = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
         label1.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
         label1.setText("Jugador que ha obtenido más puntos en una RONDA");
+
+        Resultados.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(Resultados);
+
+        Etiqueta.setText("jLabel1");
+
+        PuntosRonda.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -40,7 +83,12 @@ public class MasPuntosRonda extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(PuntosRonda)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Etiqueta)))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -48,12 +96,22 @@ public class MasPuntosRonda extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(257, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(PuntosRonda)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Etiqueta)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(104, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Etiqueta;
+    private javax.swing.JLabel PuntosRonda;
+    private javax.swing.JList<String> Resultados;
+    private javax.swing.JScrollPane jScrollPane1;
     private java.awt.Label label1;
     // End of variables declaration//GEN-END:variables
 }
