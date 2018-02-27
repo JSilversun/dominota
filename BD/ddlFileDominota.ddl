@@ -37,11 +37,10 @@ ALTER TABLE Partidas ADD CONSTRAINT Partidas_PK PRIMARY KEY ( ID ) ;
 
 CREATE TABLE Partidos_Equipos
   (
-    Id          NUMBER NOT NULL ,
     Partidas_ID NUMBER NOT NULL ,
     Equipos_Id  NUMBER NOT NULL
   ) ;
-ALTER TABLE Partidos_Equipos ADD CONSTRAINT Partidos_Equipos_PK PRIMARY KEY ( Id ) ;
+ALTER TABLE Partidos_Equipos ADD CONSTRAINT Partidos_Equipos_PK PRIMARY KEY ( Partidas_ID, Equipos_Id ) ;
 
 
 CREATE TABLE Rondas
