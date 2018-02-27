@@ -453,6 +453,7 @@ public class Operaciones {
             List<Object[]> partidas = cant_victorias.list();
             List<Object[]> ron = rondas.list();
             List<Object[]> jug = jugadores.list();
+            List<String[]> resultado;
            
             for (Object[] aRow : partidas) {
                 System.out.println(aRow[0] + " " + aRow[1] + " " + aRow[2]);
@@ -471,6 +472,8 @@ public class Operaciones {
             int acum = 0;
             int partida = 0;
             int victorias = 0;
+            List<Object[]> jgr = new ArrayList<Object[]>();
+            int i = 0;
             BigDecimal result = new BigDecimal(0);
            
             for (Object[] j : jug) {
@@ -500,8 +503,16 @@ public class Operaciones {
                     result=round(porc,2);
                 }
                 System.out.println(j[0] + " " +result);
+                jgr.add(new Object[] {j[0],result});
+                i++;
             }
-            return partidas;
+            
+            System.out.println("POR FAVOOOOOOOOOOOOOOOOOR");
+            for (Object[] aRow : jgr) {
+                System.out.println(aRow[0] + " " + aRow[1]);
+            }
+            return jgr;
+            
         }
         catch(Exception e) {
             System.out.println(e);
