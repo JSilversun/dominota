@@ -267,8 +267,8 @@ public class Operaciones {
         String hql = "select j.nombre, count(j.nombre) "
                 + "from PartidosEquipos  pe, Jugadores j "
                 + "where "
-                + "((pe.equipos.jugadoresByJugadoresId.id=j.id)"
-                + "or (COALESCE(pe.equipos.jugadoresByJugadoresId1.id,-1)=j.id))"
+                + "((pe.equipos.jugadoresByJugadoresId.id=j.id) "
+                + "or (COALESCE(pe.equipos.jugadoresByJugadoresId1.id,-1)=j.id)) "
                 + "and (select sum(puntos) from Rondas "
                 + "where (equipos.nombre=pe.equipos.nombre and partidas.id=pe.partidas.id)) is null "
                 + "group by j.nombre";
@@ -396,5 +396,4 @@ public class Operaciones {
         }
         
     }
-    
 }
