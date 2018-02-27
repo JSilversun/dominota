@@ -262,32 +262,25 @@ public class Operaciones {
         Session session;
         session=sesion.openSession();
         session.beginTransaction();
-        System.out.println("Partidas en 0");
-        String hql = "select j.nombre,  "
-                + "(select count(*) "
-                + "FROM PartidosEquipos as pe "
+        System.out.println("---- Partidas en 0 ----");
+        
+        String hql = "select j.nombre, count(j.nombre) "
+                + "from PartidosEquipos  pe, Jugadores j "
                 + "where "
-                + "(pe.equipos.jugadoresByJugadoresId.nombre=j.nombre) "
-                + " and (select sum(puntos) from Rondas "
-                + "where (equipos.nombre=pe.equipos.nombre and partidas.id=pe.partidas.id)) is null) "
-                + "+ "
-                + "(select count(*) "
-                + "FROM PartidosEquipos as pe "
-                + "where "
-                + "(pe.equipos.jugadoresByJugadoresId1.nombre=j.nombre) "
-                + " and (select sum(puntos) from Rondas "
-                + "where (equipos.nombre=pe.equipos.nombre and partidas.id=pe.partidas.id)) is null) "
-                + "from "
-                + "Jugadores as j" ;
-        String sql="select j.nombre, sum(case when r.equipos=e.id then r.puntos else 0 end) as total from Partidas p join p.equiposes e left join p.rondases r, Jugadores j WHERE (e.jugadoresByJugadoresId=j.id or e.jugadoresByJugadoresId1=j.id) group by j.nombre,r.partidas.id having sum(case when r.equipos=e.id then r.puntos else 0 end)=0";
+                + "((pe.equipos.jugadoresByJugadoresId.id=j.id)"
+                + "or (COALESCE(pe.equipos.jugadoresByJugadoresId1.id,-1)=j.id))"
+                + "and (select sum(puntos) from Rondas "
+                + "where (equipos.nombre=pe.equipos.nombre and partidas.id=pe.partidas.id)) is null "
+                + "group by j.nombre";
+        
         Query query = session.createQuery(hql); 
         
         lista = query.list();
-        System.out.println(lista);
+        //System.out.println(lista);
 
-            for (Object[] datos : lista) {
+        for (Object[] datos : lista) {
             System.out.println(datos[0] + "--" + datos[1]);
-            }
+        }
 
             return lista;
         }
