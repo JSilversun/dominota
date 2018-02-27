@@ -81,7 +81,7 @@ public class Operaciones {
             session=sesion.openSession();
             session.beginTransaction();
             partida.setEquipos(e);
-            session.save(partida);
+            session.update(partida);
             session.getTransaction().commit();
             session.close();
             //JOptionPane.showMessageDialog(null, "Partida creada con exito!");
